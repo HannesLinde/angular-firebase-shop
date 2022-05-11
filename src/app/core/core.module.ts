@@ -9,20 +9,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 
 //Pipes
 
-
 @NgModule({
   declarations: [NavbarComponent],
   exports: [MaterialModule, NavbarComponent],
-  imports: [
-    CommonModule,
-    MaterialModule
-  ]
+  imports: [CommonModule, MaterialModule],
 })
 export class CoreModule {
-  constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
-      throw new Error(
-        'Core is already loaded. Import it in the AppModule only');
+      throw new Error('Core is already loaded. Import it in the AppModule only');
     }
   }
- }
+}
