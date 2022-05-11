@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'angular-firebase-shop'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-firebase-shop');
+    expect(app.say).toEqual('hello');
   });
 
   it('should render title', () => {
