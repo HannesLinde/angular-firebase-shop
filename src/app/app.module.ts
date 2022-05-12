@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 //Components
 import { AppComponent } from './app.component';
 import {LoginModule} from "./login/login.module";
+import {LayoutModule} from "./layout/layout.module";
 
 //Directives
 
@@ -29,6 +30,7 @@ import {LoginModule} from "./login/login.module";
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
     LoginModule,
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent],
