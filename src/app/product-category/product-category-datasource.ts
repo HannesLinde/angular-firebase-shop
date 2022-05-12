@@ -7,7 +7,7 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 // TODO: Replace this with your own data model type
 export interface ProductCategoryItem {
   name: string;
-  id: number;
+  id: string;
   description?: string;
 }
 
