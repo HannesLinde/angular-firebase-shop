@@ -15,6 +15,7 @@ import { AppRoutingModule } from '@app/app-routing.module';
 //Components
 import { AppComponent } from '@app/app.component';
 import { LayoutModule } from '@app/layout/layout.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 //Directives
 
@@ -31,6 +32,7 @@ import { LayoutModule } from '@app/layout/layout.module';
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
     BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
