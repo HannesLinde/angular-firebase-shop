@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 //Components
 import { AppComponent } from './app.component';
+import {LoginModule} from "./login/login.module";
 
 //Directives
 
@@ -27,6 +28,7 @@ import { AppComponent } from './app.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
