@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {AuthenticationService} from "../core/Auth.service";
+import {AuthenticationService} from "../core/services/Auth.service";
+import {User} from "@app/core/services/user";
 
 /** https://material.angular.io/components/input/overview */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -28,6 +29,10 @@ export class LoginComponent {
 
   matcher = new MyErrorStateMatcher();
 
+  user = localStorage['user'] !== 'null' ? true : false;
+
+  userData = this.auth.userData
+
   constructor(private auth: AuthenticationService) {
   }
 
@@ -35,12 +40,19 @@ export class LoginComponent {
     console.log("login submitted");
     console.log(this.logInFormGroup.value);
     this.auth.SignIn(this.logInFormGroup.value.email, this.logInFormGroup.value.password);
-    this.logInFormGroup.value.email = '';
-    this.logInFormGroup.value.password = '';
+
   }
 
   submitSignUp() {
     console.log(this.signUpFormGroup.value);
     this.auth.SignUp(this.signUpFormGroup.value.email, this.signUpFormGroup.value.password)
+  }
+
+  logOut() {
+    console.log(this.user);
+    console.log("Logout!");
+    this.auth.SignOut();
+    this.user = false;
+    // this.userData = {};
   }
 }

@@ -72,7 +72,15 @@
         mat-stroked-button
         type="submit"
         [disabled] = signUpFormGroup.invalid
-      >Login</button>
+      >Sign Up</button>
     </form>
   </mat-card-content>
+  <button
+    mat-stroked-button
+    type="button"
+    [disabled] = !user
+    (click)="logOut()"
+  >Logout</button>
+  <pre>{{user | json}}</pre>
+  <pre>{{userData | json}}</pre>
 </mat-card>
