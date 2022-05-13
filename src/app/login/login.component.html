@@ -1,6 +1,6 @@
-<mat-card>
+<mat-card *ngIf="!userData && !signUp">
   <mat-card-title>Login</mat-card-title>
-  <mat-card-subtitle>No account yet? <a>Signup</a>!</mat-card-subtitle>
+  <mat-card-subtitle>No account yet? <span (click)="signUp = true" style="text-decoration: underline; cursor: pointer;">Signup</span>!</mat-card-subtitle>
   <mat-card-content>
   <form
     [formGroup]="logInFormGroup"
@@ -37,9 +37,9 @@
   </form>
   </mat-card-content>
 </mat-card>
-<mat-card>
+<mat-card *ngIf="signUp">
   <mat-card-title>Signup</mat-card-title>
-  <mat-card-subtitle>Create your account</mat-card-subtitle>
+  <mat-card-subtitle>Create your account. Already have an account? <span (click)="signUp = false" style="text-decoration: underline; cursor: pointer;">Login</span></mat-card-subtitle>
   <mat-card-content>
     <form
       [formGroup]="signUpFormGroup"
@@ -75,11 +75,13 @@
       >Sign Up</button>
     </form>
   </mat-card-content>
+</mat-card>
+<mat-card *ngIf="userData">
   <button
-    mat-stroked-button
-    type="button"
-    [disabled] = !user
-    (click)="logOut()"
+  mat-stroked-button
+  type="button"
+  [disabled] = !user
+  (click)="logOut()"
   >Logout</button>
   <pre>{{user | json}}</pre>
   <pre>{{userData | json}}</pre>

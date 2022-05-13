@@ -1,11 +1,8 @@
 import {Injectable, NgZone} from '@angular/core';
 import * as auth from 'firebase/auth';
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { AngularFirestore, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
+import {Auth, signInWithEmailAndPassword, signOut, User} from '@angular/fire/auth';
 import {Router} from "@angular/router";
-import firebase from "firebase/compat";
-import User = firebase.User;
-import {getAuth, createUserWithEmailAndPassword} from "@angular/fire/auth";
+import {createUserWithEmailAndPassword} from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +11,11 @@ import {getAuth, createUserWithEmailAndPassword} from "@angular/fire/auth";
   userData: User|null = null;
 
   constructor(
-    public afs: AngularFirestore,
-    public afAuth: AngularFireAuth,
+    public afAuth: Auth,
     public router: Router,
     public ngZone: NgZone
   ) {
-    this.afAuth.authState.subscribe((user) => {
+    this.afAuth.onAuthStateChanged((user) => {
       if (user) {
         this.userData = user;
         console.log("User Data", this.userData);
@@ -34,10 +30,8 @@ import {getAuth, createUserWithEmailAndPassword} from "@angular/fire/auth";
   }
 
   /* Sign up */
-  SignUp(email: string, password: string) {
-    const app =this.afs.firestore.app;
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
+  async SignUp(email: string, password: string) {
+    createUserWithEmailAndPassword(this.afAuth, email, password)
       .then((res: any) => {
         console.log('You successfully signed up!', res);
       })
@@ -49,8 +43,7 @@ import {getAuth, createUserWithEmailAndPassword} from "@angular/fire/auth";
 
   /* Sign in */
   SignIn(email: string, password: string): any {
-    this.afAuth
-      .signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(this.afAuth, email, password)
       .then((res: any) => {
         console.log('You\'re in!', res);
         this.router.navigate(['']);
@@ -63,8 +56,7 @@ import {getAuth, createUserWithEmailAndPassword} from "@angular/fire/auth";
 
   /* Sign out */
   SignOut() {
-    this.afAuth
-      .signOut()
+    signOut(this.afAuth)
       .then((res: any) => {
         console.log('You\'re out!');
         this.router.navigate(['']);
@@ -76,7 +68,7 @@ import {getAuth, createUserWithEmailAndPassword} from "@angular/fire/auth";
   }
 
   SetUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+    /*const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
     const userData = {
@@ -87,14 +79,16 @@ import {getAuth, createUserWithEmailAndPassword} from "@angular/fire/auth";
     };
     return userRef.set(userData, {
       merge: true,
-    });
+    });*/
+    console.log("Set User Data!")
   }
 
   SendVerificationMail() {
-    return this.afAuth.currentUser
+    /*return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
         this.router.navigate(['verify-email-address']);
-      });
+      });*/
+    console.log("Send verification mail")
   }
 }

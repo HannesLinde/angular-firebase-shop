@@ -29,6 +29,8 @@ export class LoginComponent {
 
   matcher = new MyErrorStateMatcher();
 
+  signUp = false;
+
   user = localStorage['user'] !== 'null' ? true : false;
 
   userData = this.auth.userData
