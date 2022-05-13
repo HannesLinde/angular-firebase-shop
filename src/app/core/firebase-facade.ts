@@ -10,17 +10,13 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 
-import { NEVER, Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs';
+import { catchError, map, tap, Observable, throwError } from 'rxjs';
 export abstract class FireBaseFacade<T> {
   constructor(private readonly firestore: Firestore, private collection: string) {}
 
   getAll(): Observable<T[]> {
     const ref = collection(this.firestore, this.collection);
     return collectionData(ref, { idField: 'id' }).pipe(
-      tap((data) => {
-        console.log(data);
-      }),
       map((object) => object as T[]),
       catchError(this.handleError)
     );
