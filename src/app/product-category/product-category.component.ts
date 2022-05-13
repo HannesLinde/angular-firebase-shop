@@ -13,7 +13,7 @@ import { ProductCategoryService } from './product-category.service';
   templateUrl: './product-category.component.html',
   styleUrls: ['./product-category.component.css'],
 })
-export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProductCategoryComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<ProductCategoryItem>;
@@ -26,14 +26,12 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
   constructor(private productCategoryService: ProductCategoryService, private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource<ProductCategoryItem>([]);
   }
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
 
   ngOnInit(): void {
     this.sub = this.productCategoryService.getAll().subscribe((data: ProductCategoryItem[]) => {
       this.dataSource = new MatTableDataSource<ProductCategoryItem>(data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
     });
   }
