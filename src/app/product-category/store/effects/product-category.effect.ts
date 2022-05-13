@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProductCategoryService } from '@app/product-category/product-category.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductCategoryActions } from '../actions';
-import { mergeMap, map, catchError, of, shareReplay } from 'rxjs';
+import { mergeMap, map, catchError, of } from 'rxjs';
 
 @Injectable()
 export class ProductCategoryEffect {
