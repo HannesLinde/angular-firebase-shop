@@ -37,7 +37,6 @@ import { AuthenticationService } from '@app/core/services/Auth.service';
     provideDatabase(() => getDatabase()),
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    LoginModule,
     LayoutModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
