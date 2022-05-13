@@ -27,15 +27,16 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
     this.dataSource = new MatTableDataSource<ProductCategoryItem>([]);
   }
   ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnInit(): void {
     this.sub = this.productCategoryService.getAll().subscribe((data: ProductCategoryItem[]) => {
       this.dataSource = new MatTableDataSource<ProductCategoryItem>(data);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
     });
   }
-
-  ngOnInit(): void {}
 
   openDialog(category: any, action: string) {
     let dialogRef = this.dialog.open(ProductCategoryDialogComponent, {

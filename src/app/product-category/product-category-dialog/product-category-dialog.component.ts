@@ -22,6 +22,7 @@ export class ProductCategoryDialogComponent implements OnInit {
     this.action = data.action;
     this.categoryForm = this.formBuilder.group({
       name: [null, [Validators.required]],
+      description: '',
     });
     this.categoryForm.patchValue(this.category);
   }
