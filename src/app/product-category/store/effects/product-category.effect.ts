@@ -8,7 +8,7 @@ import { mergeMap, map, catchError, of, shareReplay } from 'rxjs';
 export class ProductCategoryEffect {
   constructor(private actions$: Actions, private productCategoryService: ProductCategoryService) {}
 
-  loadProducts$ = createEffect(() => {
+  loadProductCategories$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductCategoryActions.loadProductCategories),
       mergeMap(() =>
