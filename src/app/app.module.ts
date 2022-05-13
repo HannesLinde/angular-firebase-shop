@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import {LoginModule} from "./login/login.module";
 import {LayoutModule} from "./layout/layout.module";
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 //Directives
 
@@ -30,6 +31,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     LoginModule,
     LayoutModule
   ],
