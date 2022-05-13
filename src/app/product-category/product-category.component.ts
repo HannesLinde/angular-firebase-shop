@@ -1,12 +1,15 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { ProductCategoryDataSource, ProductCategoryItem } from './product-category-datasource';
+import { ProductCategoryItem } from './product-category-datasource';
 import { ProductCategoryDialogComponent } from './product-category-dialog/product-category-dialog.component';
 import { ProductCategoryService } from './product-category.service';
+import { ProductCategoryActions } from './store/actions';
+import { getProductCategories, State } from './store/selectors/product-category.selector';
 
 @Component({
   selector: 'app-product-category',
@@ -23,16 +26,24 @@ export class ProductCategoryComponent implements OnInit, OnDestroy {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'actions'];
 
-  constructor(private productCategoryService: ProductCategoryService, private dialog: MatDialog) {
+  constructor(
+    private productCategoryService: ProductCategoryService,
+    private dialog: MatDialog,
+    private store: Store<State>
+  ) {
     this.dataSource = new MatTableDataSource<ProductCategoryItem>([]);
   }
 
   ngOnInit(): void {
-    this.sub = this.productCategoryService.getAll().subscribe((data: ProductCategoryItem[]) => {
-      this.dataSource = new MatTableDataSource<ProductCategoryItem>(data);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.table.dataSource = this.dataSource;
+    this.store.dispatch(ProductCategoryActions.loadProductCategories());
+    this.sub = this.store.select(getProductCategories).subscribe((data: ProductCategoryItem[]) => {
+      // as the ViewChild are only ready when the view is rundered and to avoid 'NG0100 issue'
+      if (this.table) {
+        this.dataSource = new MatTableDataSource<ProductCategoryItem>(data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.table.dataSource = this.dataSource;
+      }
     });
   }
 
