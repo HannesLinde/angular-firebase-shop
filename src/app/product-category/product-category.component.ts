@@ -3,17 +3,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ProductCategoryDataSource, ProductCategoryItem } from './product-category-datasource';
 import { ProductCategoryDialogComponent } from './product-category-dialog/product-category-dialog.component';
 import { ProductCategoryService } from './product-category.service';
+import { ProductCategoryActions } from './store/actions';
+import { getProductCategories, State } from './store/selectors/product-category.selector';
 
 @Component({
   selector: 'app-product-category',
   templateUrl: './product-category.component.html',
   styleUrls: ['./product-category.component.css'],
 })
-export class ProductCategoryComponent implements OnInit, OnDestroy {
+export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<ProductCategoryItem>;
@@ -23,17 +26,25 @@ export class ProductCategoryComponent implements OnInit, OnDestroy {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'actions'];
 
-  constructor(private productCategoryService: ProductCategoryService, private dialog: MatDialog) {
+  constructor(
+    private productCategoryService: ProductCategoryService,
+    private dialog: MatDialog,
+    private store: Store<State>
+  ) {
     this.dataSource = new MatTableDataSource<ProductCategoryItem>([]);
   }
-
-  ngOnInit(): void {
-    this.sub = this.productCategoryService.getAll().subscribe((data: ProductCategoryItem[]) => {
+  ngAfterViewInit(): void {
+    // as the ViewChild are only ready when the view is rundered
+    this.sub = this.store.select(getProductCategories).subscribe((data: ProductCategoryItem[]) => {
       this.dataSource = new MatTableDataSource<ProductCategoryItem>(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
     });
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(ProductCategoryActions.loadProductCategories());
   }
 
   openDialog(category: any, action: string) {
