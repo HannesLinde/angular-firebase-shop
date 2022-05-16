@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '@app/shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsService } from './products.service';
-import { ProductAdapter } from './models/product-category-adapter';
+import { ProductAdapter } from './models/product-adapter';
 
 @NgModule({
   declarations: [ProductsRoutingModule.components],

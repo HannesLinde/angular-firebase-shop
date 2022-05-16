@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Adapter } from '@app/core/adapter';
 import { FireBaseFacade } from '@app/core/firebase-facade';
-import { ProductAdapter } from './models/product-category-adapter';
+import { ProductAdapter } from './models/product-adapter';
 import { ProductDto } from './models/product.dto';
 import { Product } from './product.data';
 
