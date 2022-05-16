@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { Product } from '../product.data';
+import { Product } from '../models/product.model';
 import { ProductsService } from '../products.service';
 
 @Component({
@@ -20,14 +20,14 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Product>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['id', 'name', 'category'];
 
   constructor(private productService: ProductsService) {
     this.dataSource = new MatTableDataSource<Product>([]);
   }
 
   ngOnInit(): void {
-    this.sub = this.productService.getAll().subscribe((data: Product[]) => {
+    this.sub = this.productService.productsWithCategory$.subscribe((data: Product[]) => {
       // as the ViewChild are only ready when the view is rundered and to avoid 'NG0100 issue'
       if (this.table) {
         this.dataSource = new MatTableDataSource<Product>(data);
