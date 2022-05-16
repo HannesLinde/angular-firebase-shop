@@ -1,28 +1,25 @@
-import {Injectable, NgZone} from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import * as auth from 'firebase/auth';
-import {Auth, signInWithEmailAndPassword, signOut, User} from '@angular/fire/auth';
-import {Router} from "@angular/router";
-import {createUserWithEmailAndPassword} from "@angular/fire/auth";
+import { Auth, signInWithEmailAndPassword, signOut, User } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { LoginData } from '@app/login/store/actions/login.action';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
- export class AuthenticationService {
-  userData: User|null = null;
+export class AuthenticationService {
+  userData: User | null = null;
 
-  constructor(
-    public afAuth: Auth,
-    public router: Router,
-    public ngZone: NgZone
-  ) {
+  constructor(public afAuth: Auth, public router: Router, public ngZone: NgZone) {
     this.afAuth.onAuthStateChanged((user) => {
       if (user) {
         this.userData = user;
-        console.log("User Data", this.userData);
+        console.log('User Data', this.userData);
         localStorage.setItem('user', JSON.stringify(this.userData));
       } else {
-        this.userData = null
-        console.log("No user");
+        this.userData = null;
+        console.log('No user');
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user')!);
       }
@@ -42,29 +39,33 @@ import {createUserWithEmailAndPassword} from "@angular/fire/auth";
   }
 
   /* Sign in */
-  SignIn(email: string, password: string): any {
-    signInWithEmailAndPassword(this.afAuth, email, password)
+  SignIn(loginData: LoginData): any {
+    let signInResponse = null;
+    signInWithEmailAndPassword(this.afAuth, loginData.email, loginData.password)
       .then((res: any) => {
-        console.log('You\'re in!', res);
+        console.log("[AuthService] You're in!", res);
         this.router.navigate(['']);
-        this.SetUserData(res.user)
+        this.SetUserData(res.user);
+        signInResponse = res;
       })
       .catch((err: any) => {
         window.alert('Something went wrong:' + err.message);
       });
+
+    return signInResponse;
   }
 
   /* Sign out */
   SignOut() {
     signOut(this.afAuth)
       .then((res: any) => {
-        console.log('You\'re out!');
+        console.log("You're out!");
         this.router.navigate(['']);
       })
       .catch((err: any) => {
         console.log('Something went wrong:', err.message);
       })
-      .finally(() => console.log("Finally"));
+      .finally(() => console.log('Finally'));
   }
 
   SetUserData(user: any) {
@@ -80,7 +81,7 @@ import {createUserWithEmailAndPassword} from "@angular/fire/auth";
     return userRef.set(userData, {
       merge: true,
     });*/
-    console.log("Set User Data!")
+    console.log('Set User Data!');
   }
 
   SendVerificationMail() {
@@ -89,6 +90,6 @@ import {createUserWithEmailAndPassword} from "@angular/fire/auth";
       .then(() => {
         this.router.navigate(['verify-email-address']);
       });*/
-    console.log("Send verification mail")
+    console.log('Send verification mail');
   }
 }
