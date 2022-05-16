@@ -1,11 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Product } from '../models/product.model';
-import { ProductsService } from '../products.service';
 import { ProductActions } from '../store/actions';
 import { getProducts, State } from '../store/selectors/products.selector';
 
