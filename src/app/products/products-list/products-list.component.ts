@@ -25,20 +25,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'category'];
 
-  constructor(private productService: ProductsService, private store: Store<State>) {
+  constructor(private store: Store<State>) {
     this.dataSource = new MatTableDataSource<Product>([]);
   }
 
   ngOnInit(): void {
-    /*this.sub = this.productService.productsWithCategory$.subscribe((data: Product[]) => {
-      // as the ViewChild are only ready when the view is rundered and to avoid 'NG0100 issue'
-      if (this.table) {
-        this.dataSource = new MatTableDataSource<Product>(data);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.table.dataSource = this.dataSource;
-      }
-    });*/
     this.store.dispatch(ProductActions.loadProducts());
     this.sub = this.store.select(getProducts).subscribe((data: Product[]) => {
       if (this.table) {
