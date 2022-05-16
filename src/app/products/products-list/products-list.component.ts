@@ -35,9 +35,20 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource<Product>(data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        // to check if better solution exist
+        this.dataSource.sortingDataAccessor = (row: Product, columnName: string): string => {
+          if (columnName == 'category') return row.category?.name ?? '';
+          var columnValue = row[columnName as keyof Product] as string;
+          return columnValue;
+        };
         this.table.dataSource = this.dataSource;
       }
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnDestroy(): void {
