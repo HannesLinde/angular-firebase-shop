@@ -3,15 +3,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { ProductCategory } from './models/product-category.model';
+import { Product } from '../product.data';
 
 /**
- * Data source for the ProductCategory view. This class should
+ * Data source for the ProductsList view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class ProductCategoryDataSource extends DataSource<ProductCategory> {
-  data: ProductCategory[] = [];
+export class ProductsListDataSource extends DataSource<Product> {
+  data: Product[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
@@ -24,7 +24,7 @@ export class ProductCategoryDataSource extends DataSource<ProductCategory> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<ProductCategory[]> {
+  connect(): Observable<Product[]> {
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
@@ -48,7 +48,7 @@ export class ProductCategoryDataSource extends DataSource<ProductCategory> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: ProductCategory[]): ProductCategory[] {
+  private getPagedData(data: Product[]): Product[] {
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
       return data.splice(startIndex, this.paginator.pageSize);
@@ -61,7 +61,7 @@ export class ProductCategoryDataSource extends DataSource<ProductCategory> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: ProductCategory[]): ProductCategory[] {
+  private getSortedData(data: Product[]): Product[] {
     if (!this.sort || !this.sort.active || this.sort.direction === '') {
       return data;
     }

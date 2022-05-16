@@ -1,9 +1,9 @@
-import { ProductCategoryItem } from '@app/product-category/product-category-datasource';
+import { ProductCategory } from '@app/product-category/models/product-category.model';
 import { createReducer, on } from '@ngrx/store';
 import { ProductCategoryActions } from '../actions';
 
 export interface ProductCategoryState {
-  categories: ProductCategoryItem[];
+  categories: ProductCategory[];
   error: string;
 }
 

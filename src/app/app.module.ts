@@ -14,7 +14,6 @@ import { AppRoutingModule } from '@app/app-routing.module';
 
 //Components
 import { AppComponent } from './app.component';
-import { LoginModule } from './login/login.module';
 import { LayoutModule } from './layout/layout.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';

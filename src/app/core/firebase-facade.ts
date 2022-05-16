@@ -11,40 +11,45 @@ import {
 } from '@angular/fire/firestore';
 
 import { catchError, map, tap, Observable, throwError } from 'rxjs';
-export abstract class FireBaseFacade<T> {
-  constructor(private readonly firestore: Firestore, private collection: string) {}
+import { Adapter } from './adapter';
+export abstract class FireBaseFacade<T, R> {
+  constructor(private collection: string) {}
+
+  // to resolve circular injection
+  abstract getFirestore(): Firestore;
+  abstract getAdapter(): Adapter<T, R>;
 
   getAll(): Observable<T[]> {
-    const ref = collection(this.firestore, this.collection);
+    const ref = collection(this.getFirestore(), this.collection);
     return collectionData(ref, { idField: 'id' }).pipe(
-      map((object) => object as T[]),
+      map((object) => (object as R[]).map((item) => this.getAdapter().toModel(item))),
       catchError(this.handleError)
     );
   }
 
   get(id: String): Observable<T> {
-    const ref = doc(this.firestore, `${this.collection}/${id}`);
+    const ref = doc(this.getFirestore(), `${this.collection}/${id}`);
     return docData(ref, { idField: 'id' }).pipe(
-      map((object) => object as T),
+      map((object) => this.getAdapter().toModel(object as R)),
       catchError(this.handleError)
     );
   }
 
   async add(data: T) {
-    const ref = collection(this.firestore, this.collection);
-    const docRef = await addDoc(ref, data);
+    const ref = collection(this.getFirestore(), this.collection);
+    const docRef = await addDoc(ref, this.getAdapter().toDto(data));
     return docData(docRef, { idField: 'id' }).pipe(
-      map((object) => object as T),
+      map((object) => this.getAdapter().toModel(object as R)),
       catchError(this.handleError)
     );
   }
 
   async delete(id: string) {
-    return deleteDoc(doc(this.firestore, `${this.collection}/${id}`));
+    return deleteDoc(doc(this.getFirestore(), `${this.collection}/${id}`));
   }
 
   async update(id: string, data: T) {
-    updateDoc(doc(this.firestore, `${this.collection}/${id}`), data);
+    updateDoc(doc(this.getFirestore(), `${this.collection}/${id}`), this.getAdapter().toDto(data));
   }
 
   handleError(err: HttpErrorResponse): Observable<never> {

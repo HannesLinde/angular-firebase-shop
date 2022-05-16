@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductsListComponent } from './products-list/products-list.component';
-import { ProductsGridComponent } from './products-grid/products-grid.component';
-import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { SharedModule } from '@app/shared/shared.module';
+import { ProductsRoutingModule } from './products-routing.module';
+import { ProductsService } from './products.service';
+import { ProductAdapter } from './models/product-category-adapter';
 
 @NgModule({
-  declarations: [ProductsListComponent, ProductsGridComponent, ProductsEditComponent],
-  imports: [CommonModule, SharedModule],
+  declarations: [ProductsRoutingModule.components],
+  imports: [CommonModule, SharedModule, ProductsRoutingModule],
+  providers: [ProductsService, ProductAdapter],
 })
 export class ProductsModule {}
