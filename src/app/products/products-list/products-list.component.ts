@@ -2,9 +2,12 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Product } from '../models/product.model';
 import { ProductsService } from '../products.service';
+import { ProductActions } from '../store/actions';
+import { getProducts, State } from '../store/selectors/products.selector';
 
 @Component({
   selector: 'app-products-list',
@@ -22,13 +25,22 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'category'];
 
-  constructor(private productService: ProductsService) {
+  constructor(private productService: ProductsService, private store: Store<State>) {
     this.dataSource = new MatTableDataSource<Product>([]);
   }
 
   ngOnInit(): void {
-    this.sub = this.productService.productsWithCategory$.subscribe((data: Product[]) => {
+    /*this.sub = this.productService.productsWithCategory$.subscribe((data: Product[]) => {
       // as the ViewChild are only ready when the view is rundered and to avoid 'NG0100 issue'
+      if (this.table) {
+        this.dataSource = new MatTableDataSource<Product>(data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.table.dataSource = this.dataSource;
+      }
+    });*/
+    this.store.dispatch(ProductActions.loadProducts());
+    this.sub = this.store.select(getProducts).subscribe((data: Product[]) => {
       if (this.table) {
         this.dataSource = new MatTableDataSource<Product>(data);
         this.dataSource.sort = this.sort;
