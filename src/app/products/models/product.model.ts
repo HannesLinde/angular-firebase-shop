@@ -1,5 +1,10 @@
 import { ProductCategory } from '@app/product-category/models/product-category.model';
 
+export enum ProductTypeEnum {
+  'CUSTOM',
+  'ENTREPRISE',
+}
+
 export class Product {
   name: string;
   id: string;
@@ -7,12 +12,14 @@ export class Product {
   category?: ProductCategory;
   categoryId: string;
   description?: string;
+  type: ProductTypeEnum;
 
   constructor(
     id: string,
     name: string,
     price: number,
     categoryId: string,
+    type: ProductTypeEnum,
     description?: string,
     category?: ProductCategory
   ) {
@@ -21,6 +28,7 @@ export class Product {
     this.price = price;
     this.categoryId = categoryId;
     this.category = category;
+    this.type = type;
     this.description = description;
   }
 }
