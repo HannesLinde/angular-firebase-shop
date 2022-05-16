@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { productReducer } from './store/reducers/product-category.reducer';
 import { ProductCategoryEffect } from './store/effects/product-category.effect';
+import { ProductCategoryAdapter } from './models/product-category-adapter';
 
 @NgModule({
   declarations: [ProductCategoryRoutingModule.components, ProductCategoryDialogComponent],
@@ -22,6 +23,6 @@ import { ProductCategoryEffect } from './store/effects/product-category.effect';
     StoreModule.forFeature('productCategories', productReducer),
     EffectsModule.forFeature([ProductCategoryEffect]),
   ],
-  providers: [ProductCategoryService],
+  providers: [ProductCategoryService, ProductCategoryAdapter],
 })
 export class ProductCategoryModule {}

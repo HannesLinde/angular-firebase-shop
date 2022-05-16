@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductCategoryItem } from '../product-category-datasource';
+import { ProductCategory } from '../models/product-category.model';
 
 @Component({
   selector: 'app-product-category-dialog',
@@ -10,13 +10,13 @@ import { ProductCategoryItem } from '../product-category-datasource';
 })
 export class ProductCategoryDialogComponent implements OnInit {
   action: string;
-  category: ProductCategoryItem;
+  category: ProductCategory;
   categoryForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ProductCategoryDialogComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: { category: ProductCategoryItem; action: string }
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: { category: ProductCategory; action: string }
   ) {
     this.category = data.category;
     this.action = data.action;
