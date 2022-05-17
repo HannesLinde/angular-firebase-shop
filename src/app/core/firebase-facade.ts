@@ -49,7 +49,7 @@ export abstract class FireBaseFacade<T, R> {
   }
 
   async update(id: string, data: T) {
-    updateDoc(doc(this.getFirestore(), `${this.collection}/${id}`), this.getAdapter().toDto(data));
+    return updateDoc(doc(this.getFirestore(), `${this.collection}/${id}`), this.getAdapter().toDto(data));
   }
 
   handleError(err: HttpErrorResponse): Observable<never> {

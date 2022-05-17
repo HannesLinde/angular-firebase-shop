@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, doc, docData, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 import { Adapter } from '@app/core/adapter';
 import { FireBaseFacade } from '@app/core/firebase-facade';
 import { ProductCategoryService } from '@app/product-category/product-category.service';
@@ -47,5 +47,12 @@ export class ProductsService extends FireBaseFacade<Product, ProductDto> {
       map((object) => this.getAdapter().toModel(object as ProductDto)),
       catchError(this.handleError)
     );
+  }
+
+  override async update(id: string, data: Product) {
+    return updateDoc(doc(this.getFirestore(), `${COLLECTION}/${id}`), {
+      ...this.getAdapter().toDto(data),
+      category: doc(this.getFirestore(), `category/${data.category?.id}`),
+    });
   }
 }

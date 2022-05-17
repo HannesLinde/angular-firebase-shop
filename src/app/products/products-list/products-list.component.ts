@@ -22,7 +22,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Product>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'category'];
+  displayedColumns = ['name', 'category', 'actions'];
 
   constructor(private store: Store<State>) {
     this.dataSource = new MatTableDataSource<Product>([]);

@@ -24,7 +24,7 @@ export class ProductCategoryComponent implements OnInit, OnDestroy {
   private sub: Subscription | null = null;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'actions'];
+  displayedColumns = ['name', 'actions'];
 
   constructor(
     private productCategoryService: ProductCategoryService,
@@ -82,6 +82,11 @@ export class ProductCategoryComponent implements OnInit, OnDestroy {
 
   update(category: ProductCategory) {
     this.productCategoryService.update(category.id, category);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnDestroy(): void {
