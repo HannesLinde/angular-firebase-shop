@@ -5,17 +5,12 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input />
     </mat-form-field>
     <span class="filter-toolbar"></span>
-    <button mat-button mat-fab aria-label="Example icon button with a heart icon" routerLink="add" color="primary">
-      <mat-icon>add_circle</mat-icon>
+    <button mat-button mat-mini-fab routerLink="add" color="primary">
+      <mat-icon>add</mat-icon>
     </button>
   </mat-toolbar>
 
   <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
-    <!--ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-    </ng-container-->
-
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
       <td mat-cell *matCellDef="let row">{{ row.name }}</td>
@@ -32,9 +27,9 @@
         <button mat-icon-button focusable="false" [routerLink]="['edit', element.id]">
           <mat-icon color="primary">edit</mat-icon>
         </button>
-        <!--button mat-icon-button focusable="false" (click)="openDialog(element, 'Delete')">
+        <button mat-icon-button focusable="false" (click)="openDialog(element)">
           <mat-icon color="warn">delete</mat-icon>
-        </button-->
+        </button>
       </td>
     </ng-container>
 

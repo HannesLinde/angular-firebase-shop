@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { DeleteDialogComponent } from '@app/shared/delete-dialog/delete-dialog.component';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Product } from '../models/product.model';
+import { ProductsService } from '../products.service';
 import { ProductActions } from '../store/actions';
 import { getProducts, State } from '../store/selectors/products.selector';
 
@@ -24,7 +27,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'category', 'actions'];
 
-  constructor(private store: Store<State>) {
+  constructor(private dialog: MatDialog, private store: Store<State>, private productService: ProductsService) {
     this.dataSource = new MatTableDataSource<Product>([]);
   }
 
@@ -42,6 +45,19 @@ export class ProductsListComponent implements OnInit, OnDestroy {
           return columnValue;
         };
         this.table.dataSource = this.dataSource;
+      }
+    });
+  }
+
+  openDialog(element: Product) {
+    let dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '450px',
+      data: { identifier: element.id, display: element.name },
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result) {
+        this.productService.delete(result);
       }
     });
   }
