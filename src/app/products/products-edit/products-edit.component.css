@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.container > * {
+    width: 100%;
+  }
+
+.left-form-btn {
+    display: flex;
+    flex-direction: row-reverse;
+    
+  }
+
+.left-form-btn > *{
+  margin-left: 1rem;
+  margin-right: 1rem;
+}

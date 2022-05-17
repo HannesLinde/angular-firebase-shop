@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, doc, docData, Firestore } from '@angular/fire/firestore';
 import { Adapter } from '@app/core/adapter';
 import { FireBaseFacade } from '@app/core/firebase-facade';
 import { ProductCategoryService } from '@app/product-category/product-category.service';
-import { combineLatest, map } from 'rxjs';
+import { catchError, combineLatest, map } from 'rxjs';
 import { ProductAdapter } from './models/product-adapter';
 import { ProductDto } from './models/product.dto';
 import { Product } from './models/product.model';
+const COLLECTION = 'products';
 
 @Injectable()
 export class ProductsService extends FireBaseFacade<Product, ProductDto> {
@@ -21,7 +22,7 @@ export class ProductsService extends FireBaseFacade<Product, ProductDto> {
     private adapter: ProductAdapter,
     private productCategory: ProductCategoryService
   ) {
-    super('products');
+    super(COLLECTION);
   }
 
   productsWithCategory$ = combineLatest([this.getAll(), this.productCategory.getAll()]).pipe(
@@ -35,4 +36,16 @@ export class ProductsService extends FireBaseFacade<Product, ProductDto> {
       )
     )
   );
+  // to resolve reference to object
+  override async add(data: Product) {
+    const ref = collection(this.firestore, COLLECTION);
+    const docRef = await addDoc(ref, {
+      ...this.getAdapter().toDto(data),
+      category: doc(this.getFirestore(), `category/${data.category?.id}`),
+    });
+    return docData(docRef, { idField: 'id' }).pipe(
+      map((object) => this.getAdapter().toModel(object as ProductDto)),
+      catchError(this.handleError)
+    );
+  }
 }

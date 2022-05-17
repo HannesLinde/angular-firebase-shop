@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffect } from './store/effects/products.effect';
 import { productReducer } from './store/reducers/products.reducer';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ProductsRoutingModule.components],
@@ -19,6 +20,7 @@ import { productReducer } from './store/reducers/products.reducer';
     ProductCategoryModule,
     StoreModule.forFeature('products', productReducer),
     EffectsModule.forFeature([ProductEffect]),
+    ReactiveFormsModule,
   ],
   providers: [ProductsService, ProductAdapter],
 })

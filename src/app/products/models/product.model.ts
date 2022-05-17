@@ -1,9 +1,6 @@
 import { ProductCategory } from '@app/product-category/models/product-category.model';
 
-export enum ProductTypeEnum {
-  'CUSTOM',
-  'ENTREPRISE',
-}
+export type ProductType = 'CUSTOM' | 'ENTREPRISE';
 
 export class Product {
   name: string;
@@ -12,14 +9,14 @@ export class Product {
   category?: ProductCategory;
   categoryId: string;
   description?: string;
-  type: ProductTypeEnum;
+  type: ProductType;
 
   constructor(
     id: string,
     name: string,
     price: number,
     categoryId: string,
-    type: ProductTypeEnum,
+    type: ProductType,
     description?: string,
     category?: ProductCategory
   ) {

@@ -6,6 +6,8 @@ import { ProductCategoryAdapter } from './models/product-category-adapter';
 import { ProductCategoryDto } from './models/product-category.dto';
 import { ProductCategory } from './models/product-category.model';
 
+const COLLECTION = 'category';
+
 @Injectable()
 export class ProductCategoryService extends FireBaseFacade<ProductCategory, ProductCategoryDto> {
   getAdapter(): Adapter<ProductCategory, ProductCategoryDto> {
@@ -15,6 +17,6 @@ export class ProductCategoryService extends FireBaseFacade<ProductCategory, Prod
     return this.firestore;
   }
   constructor(private firestore: Firestore, private adapter: ProductCategoryAdapter) {
-    super('category');
+    super(COLLECTION);
   }
 }
