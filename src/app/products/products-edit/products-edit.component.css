@@ -17,3 +17,9 @@
   margin-left: 1rem;
   margin-right: 1rem;
 }
+
+mat-card {    
+  max-width: 80%;    
+  margin: 2em auto;    
+  text-align: center;    
+}  
