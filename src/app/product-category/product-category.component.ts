@@ -41,7 +41,6 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnInit(): void {
     this.store.dispatch(ProductCategoryActions.loadProductCategories());
     this.sub = this.store.select(getProductCategories).subscribe((data: ProductCategory[]) => {
-      // as the ViewChild are only ready when the view is rundered and to avoid 'NG0100 issue'
       this.dataSource.data = data;
     });
   }
