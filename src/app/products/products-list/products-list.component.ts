@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -10,13 +10,14 @@ import { Product } from '../models/product.model';
 import { ProductsService } from '../products.service';
 import { ProductActions } from '../store/actions';
 import { getProducts, State } from '../store/selectors/products.selector';
+import { ProductsListDataSource } from './products-list-datasource';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.css'],
 })
-export class ProductsListComponent implements OnInit, OnDestroy {
+export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   private sub: Subscription | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -30,22 +31,17 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog, private store: Store<State>, private productService: ProductsService) {
     this.dataSource = new MatTableDataSource<Product>([]);
   }
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sortingDataAccessor = ProductsListDataSource.sortingDataAccessor;
+    this.dataSource.filterPredicate = ProductsListDataSource.filterPredicate;
+  }
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadProducts());
     this.sub = this.store.select(getProducts).subscribe((data: Product[]) => {
-      if (this.table) {
-        this.dataSource = new MatTableDataSource<Product>(data);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        // to check if better solution exist
-        this.dataSource.sortingDataAccessor = (row: Product, columnName: string): string => {
-          if (columnName == 'category') return row.category?.name ?? '';
-          var columnValue = row[columnName as keyof Product] as string;
-          return columnValue;
-        };
-        this.table.dataSource = this.dataSource;
-      }
+      this.dataSource.data = data;
     });
   }
 

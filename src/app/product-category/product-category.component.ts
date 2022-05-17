@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -16,7 +16,7 @@ import { getProductCategories, State } from './store/selectors/product-category.
   templateUrl: './product-category.component.html',
   styleUrls: ['./product-category.component.css'],
 })
-export class ProductCategoryComponent implements OnInit, OnDestroy {
+export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<ProductCategory>;
@@ -33,17 +33,16 @@ export class ProductCategoryComponent implements OnInit, OnDestroy {
   ) {
     this.dataSource = new MatTableDataSource<ProductCategory>([]);
   }
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit(): void {
     this.store.dispatch(ProductCategoryActions.loadProductCategories());
     this.sub = this.store.select(getProductCategories).subscribe((data: ProductCategory[]) => {
       // as the ViewChild are only ready when the view is rundered and to avoid 'NG0100 issue'
-      if (this.table) {
-        this.dataSource = new MatTableDataSource<ProductCategory>(data);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.table.dataSource = this.dataSource;
-      }
+      this.dataSource.data = data;
     });
   }
 

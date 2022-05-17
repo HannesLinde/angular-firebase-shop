@@ -1,14 +1,9 @@
 <div class="mat-elevation-z8">
-  <mat-toolbar>
-    <mat-form-field appearance="standard">
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input />
-    </mat-form-field>
-    <span class="filter-toolbar"></span>
+  <app-filter (filter)="applyFilter($event)">
     <button mat-button mat-mini-fab routerLink="add" color="primary">
       <mat-icon>add</mat-icon>
     </button>
-  </mat-toolbar>
+  </app-filter>
 
   <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
     <ng-container matColumnDef="name">
