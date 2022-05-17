@@ -10,11 +10,6 @@ export class ProductsListDataSource {
   };
 
   static filterPredicate = (data: any, filter: string) => {
-    const accumulator = (currentTerm: string, key: string) => {
-      return key === 'category' ? currentTerm + data.category.name : currentTerm + data[key];
-    };
-    const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-    const transformedFilter = filter.trim().toLowerCase();
-    return dataStr.indexOf(transformedFilter) !== -1;
+    return data.name.toLocaleLowerCase().includes(filter) || data.category.name.toLocaleLowerCase().includes(filter);
   };
 }
