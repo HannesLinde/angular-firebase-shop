@@ -7,4 +7,5 @@ export interface ProductDto {
   category: any;
   description?: string;
   type: ProductType;
+  images: string[];
 }

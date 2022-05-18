@@ -1,33 +1,55 @@
 <mat-card>
   <mat-card-title> Product </mat-card-title>
+
   <mat-card-content>
-    <form [formGroup]="productForm" (ngSubmit)="save()">
-      <div class="container">
-        <mat-form-field appearance="fill">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" required />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>categories</mat-label>
-          <mat-select formControlName="category" name="category" [compareWith]="displayCategory">
-            <mat-option *ngFor="let category of productCategories$ | async" [value]="category">
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Price</mat-label>
-          <input matInput type="number" formControlName="price" />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description"></textarea>
-        </mat-form-field>
+    <div class="container">
+      <div class="fileupload">
+        <img mat-card-lg-image [src]="productImageUrl" />
+        <label for="fileInput" class="file-upload-label">
+          <a mat-flat-button color="primary">Upload Image</a>
+          <input
+            style="display: none"
+            id="fileInput"
+            type="file"
+            (change)="filesChanged($event)"
+            multiple
+            accept=".png,.jpg"
+          />
+        </label>
+        <!--span>{{ selectedFiles && selectedFiles.length > 0 ? selectedFiles.length + ' files selected' : '' }}</span-->
+        <div class="image-preview">
+          <img *ngFor="let preview of previews" [src]="preview.url" mat-card-sm-image />
+        </div>
       </div>
-      <div class="left-form-btn">
-        <button mat-button mat-flat-button color="primary" type="submit">Submit</button>
-        <button mat-button routerLink="/products" mat-flat-button>Cancel</button>
-      </div>
-    </form>
-  </mat-card-content></mat-card
->
+
+      <form [formGroup]="productForm" (ngSubmit)="save()" style="flex: 1 1 100%; flex: 1">
+        <div class="form-container">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>categories</mat-label>
+            <mat-select formControlName="category" name="category" [compareWith]="displayCategory">
+              <mat-option *ngFor="let category of productCategories$ | async" [value]="category">
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" formControlName="price" />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="left-form-btn">
+          <button mat-button mat-flat-button color="primary" type="submit">Submit</button>
+          <button mat-button routerLink="/products" mat-flat-button>Cancel</button>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

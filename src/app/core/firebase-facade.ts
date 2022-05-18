@@ -38,10 +38,7 @@ export abstract class FireBaseFacade<T, R> {
   async add(data: T) {
     const ref = collection(this.getFirestore(), this.collection);
     const docRef = await addDoc(ref, this.getAdapter().toDto(data));
-    return docData(docRef, { idField: 'id' }).pipe(
-      map((object) => this.getAdapter().toModel(object as R)),
-      catchError(this.handleError)
-    );
+    return docRef.id;
   }
 
   async delete(id: string) {

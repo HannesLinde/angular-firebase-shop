@@ -43,10 +43,7 @@ export class ProductsService extends FireBaseFacade<Product, ProductDto> {
       ...this.getAdapter().toDto(data),
       category: doc(this.getFirestore(), `category/${data.category?.id}`),
     });
-    return docData(docRef, { idField: 'id' }).pipe(
-      map((object) => this.getAdapter().toModel(object as ProductDto)),
-      catchError(this.handleError)
-    );
+    return docRef.id;
   }
 
   override async update(id: string, data: Product) {

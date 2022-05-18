@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { FirebaseStorage } from '@app/core/firebase-storage.service';
 import { DeleteDialogComponent } from '@app/shared/delete-dialog/delete-dialog.component';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';

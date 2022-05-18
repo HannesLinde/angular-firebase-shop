@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from 'src/environments/environment';
@@ -34,6 +35,7 @@ import { AuthenticationService } from '@app/core/services/Auth.service';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
+    provideStorage(() => getStorage()),
     BrowserAnimationsModule,
     ReactiveFormsModule,
     LayoutModule,

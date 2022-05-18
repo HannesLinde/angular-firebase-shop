@@ -12,8 +12,8 @@ export class ProductAdapter implements Adapter<Product, ProductDto> {
       data.price,
       data.category.path.split('/')[1],
       data.type,
-      data.description,
-      undefined
+      data.images,
+      data.description
     );
   }
   toDto(data: Product): ProductDto {
