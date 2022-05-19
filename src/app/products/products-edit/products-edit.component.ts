@@ -14,6 +14,7 @@ import { getProducts, State as ProductState } from '@app/products/store/selector
 import { Product } from '../models/product.model';
 import { ProductsService } from '../products.service';
 import { ProductStorage } from '../products-files-storage.service';
+import { ImagePreview } from '@app/shared/images-preview/image-preview';
 
 @Component({
   selector: 'app-products-edit',
@@ -28,7 +29,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   selectedFiles?: File[];
   private filesToDelete: string[] = [];
 
-  previews: image[] = [];
+  previews: ImagePreview[] = [];
   private subscriptions = new Subscription();
   constructor(
     private formBuilder: FormBuilder,
@@ -120,7 +121,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   private getImageUrlFromStore = (image: string, id: string) => this.storage.getFileUrl(image, id);
 
-  deleteFile(image: image) {
+  deleteFile(image: ImagePreview) {
     if (image.stored) {
       this.filesToDelete.push(image.name);
     } else {
@@ -157,9 +158,4 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-}
-interface image {
-  url: string;
-  stored: boolean;
-  name: string;
 }

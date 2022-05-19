@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ImagePreview } from './image-preview';
 
 @Component({
   selector: 'app-images-preview',
@@ -6,20 +7,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./images-preview.component.css'],
 })
 export class ImagesPreviewComponent implements OnInit {
-  @Input() previews: FilePreview[] = [];
-  @Output() delete = new EventEmitter<FilePreview>();
+  @Input() previews: ImagePreview[] = [];
+  @Output() delete = new EventEmitter<ImagePreview>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  deleteFile(filePreview: FilePreview) {
-    this.delete.emit(filePreview);
+  deleteFile(ImagePreview: ImagePreview) {
+    this.delete.emit(ImagePreview);
   }
-}
-
-interface FilePreview {
-  url: string;
-  stored: boolean;
-  name: string;
 }
