@@ -24,7 +24,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   productForm!: FormGroup;
   productCategories$!: Observable<ProductCategory[]>;
   id!: string;
-  productImageUrl: string = '/assets/img/no-image.png';
+  productImageUrl: string = '';
   selectedFiles?: File[];
   private filesToDelete: string[] = [];
 
@@ -115,7 +115,6 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
           name: image,
         }))
       );
-      this.productImageUrl = this.previews[0].url || this.productImageUrl;
     }
   };
 
@@ -128,7 +127,6 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       this.selectedFiles = this.selectedFiles?.filter((file) => file.name !== image.name);
     }
     this.previews = this.previews?.filter((file) => file.name !== image.name);
-    this.productImageUrl = this.previews.length > 0 ? this.previews[0].url : '/assets/img/no-image.png';
   }
 
   displayCategory(category1: ProductCategory, category2: ProductCategory) {
@@ -150,7 +148,6 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
             stored: false,
             name: (this.selectedFiles && this.selectedFiles[i].name) || '',
           });
-          this.productImageUrl = this.previews.length > 0 ? this.previews[0].url : '/assets/img/no-image.png';
         };
         reader.readAsDataURL(this.selectedFiles[i]);
       }

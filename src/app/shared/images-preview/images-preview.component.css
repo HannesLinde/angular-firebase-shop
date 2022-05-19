@@ -1,0 +1,13 @@
+.image-preview {
+    display: flex;
+  }
+  
+  @media screen and (max-width: 600px) {
+  
+    .image-preview {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      width: -webkit-fill-available;
+    }
+  }
