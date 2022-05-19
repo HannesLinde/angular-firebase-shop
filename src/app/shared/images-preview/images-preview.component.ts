@@ -9,12 +9,17 @@ import { ImagePreview } from './image-preview';
 export class ImagesPreviewComponent implements OnInit {
   @Input() previews: ImagePreview[] = [];
   @Output() delete = new EventEmitter<ImagePreview>();
+  @Output() select = new EventEmitter<ImagePreview>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  deleteFile(ImagePreview: ImagePreview) {
+  deleteImage(ImagePreview: ImagePreview) {
     this.delete.emit(ImagePreview);
+  }
+
+  selectImage(ImagePreview: ImagePreview) {
+    this.select.emit(ImagePreview);
   }
 }

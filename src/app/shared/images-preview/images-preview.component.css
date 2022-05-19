@@ -1,11 +1,13 @@
 .image-preview {
     display: flex;
+    column-gap: 5%;
   }
   
   @media screen and (max-width: 600px) {
   
     .image-preview {
       display: flex;
+      column-gap: 5%;
       overflow-x: auto;
       white-space: nowrap;
       width: -webkit-fill-available;

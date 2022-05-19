@@ -4,7 +4,7 @@
   <mat-card-content>
     <div class="container">
       <div class="fileupload">
-        <img mat-card-lg-image [src]="previews.length > 0 ? previews[0].url : '/assets/img/no-image.png'" />
+        <img mat-card-lg-image [src]="selectedImage | imagePipe: previews:'/assets/img/no-image.png'" />
         <label for="fileInput" class="file-upload-label">
           <a mat-flat-button color="primary">Upload Image</a>
           <input
@@ -16,7 +16,11 @@
             accept=".png,.jpg"
           />
         </label>
-        <app-images-preview (delete)="deleteFile($event)" [previews]="previews"></app-images-preview>
+        <app-images-preview
+          (select)="selectImage($event)"
+          (delete)="deleteImage($event)"
+          [previews]="previews"
+        ></app-images-preview>
       </div>
 
       <form [formGroup]="productForm" (ngSubmit)="save()" style="flex: 1 1 100%; flex: 1">

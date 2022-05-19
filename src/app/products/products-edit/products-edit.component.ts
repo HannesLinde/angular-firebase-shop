@@ -30,6 +30,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   private filesToDelete: string[] = [];
 
   previews: ImagePreview[] = [];
+  selectedImage?: ImagePreview;
   private subscriptions = new Subscription();
   constructor(
     private formBuilder: FormBuilder,
@@ -121,7 +122,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   private getImageUrlFromStore = (image: string, id: string) => this.storage.getFileUrl(image, id);
 
-  deleteFile(image: ImagePreview) {
+  deleteImage(image: ImagePreview) {
     if (image.stored) {
       this.filesToDelete.push(image.name);
     } else {
@@ -130,11 +131,22 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     this.previews = this.previews?.filter((file) => file.name !== image.name);
   }
 
+  selectImage(image: ImagePreview) {
+    this.selectedImage = image;
+  }
+
   displayCategory(category1: ProductCategory, category2: ProductCategory) {
     if (category1 && category2 && category1.id === category2.id) {
       return true;
     }
     return false;
+  }
+
+  getSelectedImage() {
+    this.selectedImage =
+      this.previews.length > 0
+        ? this.previews.find((image) => image.name === this.selectedImage?.name) || this.previews[0]
+        : undefined;
   }
 
   filesChanged(event: any) {
@@ -149,6 +161,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
             stored: false,
             name: (this.selectedFiles && this.selectedFiles[i].name) || '',
           });
+          this.selectedImage = this.selectedImage ?? this.previews[0];
         };
         reader.readAsDataURL(this.selectedFiles[i]);
       }

@@ -4,10 +4,11 @@ import { MaterialModule } from './material.module';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { FilterComponent } from './filter/filter.component';
 import { ImagesPreviewComponent } from './images-preview/images-preview.component';
+import { ImagePipe } from './image-pipe.pipe';
 
 @NgModule({
-  declarations: [DeleteDialogComponent, FilterComponent, ImagesPreviewComponent],
+  declarations: [ImagePipe, DeleteDialogComponent, FilterComponent, ImagesPreviewComponent],
   imports: [CommonModule, MaterialModule],
-  exports: [ImagesPreviewComponent, FilterComponent, MaterialModule],
+  exports: [ImagePipe, ImagesPreviewComponent, FilterComponent, MaterialModule],
 })
 export class SharedModule {}
