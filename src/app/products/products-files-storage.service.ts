@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@angular/fire/storage';
-import { FirebaseStorage } from '@app/core/firebase-storage.service';
+import { FirebaseStorage } from '@app/core/firebase-storage';
 
 @Injectable()
 export class ProductStorage extends FirebaseStorage {
