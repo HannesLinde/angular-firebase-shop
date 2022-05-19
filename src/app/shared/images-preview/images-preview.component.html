@@ -1,13 +1,8 @@
 <div class="image-preview">
   <div *ngFor="let preview of previews">
-    <div style="display: inherit; position: relative">
-      <img
-        [src]="preview.url"
-        mat-card-sm-image
-        style="cursor: pointer; border-radius: 0.375rem"
-        (click)="selectImage(preview)"
-      />
-      <a style="position: absolute; right: 0%; cursor: pointer" (click)="deleteImage(preview)">
+    <div class="inner-container">
+      <img [src]="preview.url" mat-card-sm-image class="image-selection" (click)="selectImage(preview)" />
+      <a class="remove-icon" (click)="deleteImage(preview)">
         <mat-icon>remove_circle</mat-icon>
       </a>
     </div>
