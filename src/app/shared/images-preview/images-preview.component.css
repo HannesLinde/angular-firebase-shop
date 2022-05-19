@@ -1,7 +1,3 @@
-.image-preview {
-    display: flex;
-    column-gap: 5%;
-  }
 
 .remove-icon{
 
@@ -14,19 +10,3 @@
   display: inherit; 
   position: relative
 }
-
-.image-selection{
-  cursor: pointer; 
-  border-radius: 0.375rem
-}
-  
-  @media screen and (max-width: 600px) {
-  
-    .image-preview {
-      display: flex;
-      column-gap: 5%;
-      overflow-x: auto;
-      white-space: nowrap;
-      width: -webkit-fill-available;
-    }
-  }

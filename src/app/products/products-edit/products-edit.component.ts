@@ -25,12 +25,10 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   productForm!: FormGroup;
   productCategories$!: Observable<ProductCategory[]>;
   id!: string;
-  productImageUrl: string = '';
   selectedFiles?: File[];
-  private filesToDelete: string[] = [];
+  filesToDelete: string[] = [];
 
   previews: ImagePreview[] = [];
-  selectedImage?: ImagePreview;
   private subscriptions = new Subscription();
   constructor(
     private formBuilder: FormBuilder,
@@ -122,50 +120,11 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   private getImageUrlFromStore = (image: string, id: string) => this.storage.getFileUrl(image, id);
 
-  deleteImage(image: ImagePreview) {
-    if (image.stored) {
-      this.filesToDelete.push(image.name);
-    } else {
-      this.selectedFiles = this.selectedFiles?.filter((file) => file.name !== image.name);
-    }
-    this.previews = this.previews?.filter((file) => file.name !== image.name);
-  }
-
-  selectImage(image: ImagePreview) {
-    this.selectedImage = image;
-  }
-
   displayCategory(category1: ProductCategory, category2: ProductCategory) {
     if (category1 && category2 && category1.id === category2.id) {
       return true;
     }
     return false;
-  }
-
-  getSelectedImage() {
-    this.selectedImage =
-      this.previews.length > 0
-        ? this.previews.find((image) => image.name === this.selectedImage?.name) || this.previews[0]
-        : undefined;
-  }
-
-  filesChanged(event: any) {
-    this.selectedFiles = Array.from(event.target.files as FileList);
-    this.previews = this.previews.filter((p) => p.stored);
-    if (this.selectedFiles) {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.previews.push({
-            url: e.target.result,
-            stored: false,
-            name: (this.selectedFiles && this.selectedFiles[i].name) || '',
-          });
-          this.selectedImage = this.selectedImage ?? this.previews[0];
-        };
-        reader.readAsDataURL(this.selectedFiles[i]);
-      }
-    }
   }
 
   ngOnDestroy(): void {
