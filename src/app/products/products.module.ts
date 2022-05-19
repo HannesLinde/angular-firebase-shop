@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductEffect } from './store/effects/products.effect';
 import { productReducer } from './store/reducers/products.reducer';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductStorage } from './products-files-storage.service';
 
 @NgModule({
   declarations: [ProductsRoutingModule.components],
@@ -22,6 +23,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     EffectsModule.forFeature([ProductEffect]),
     ReactiveFormsModule,
   ],
-  providers: [ProductsService, ProductAdapter],
+  providers: [ProductsService, ProductAdapter, ProductStorage],
 })
 export class ProductsModule {}

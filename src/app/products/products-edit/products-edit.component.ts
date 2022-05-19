@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { delay, first, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { ProductCategory } from '@app/product-category/models/product-category.model';
 import { ProductCategoryActions } from '@app/product-category/store/actions';
@@ -13,8 +13,7 @@ import { getProducts, State as ProductState } from '@app/products/store/selector
 
 import { Product } from '../models/product.model';
 import { ProductsService } from '../products.service';
-import { ProductActions } from '../store/actions';
-import { FirebaseStorage } from '@app/core/firebase-storage.service';
+import { ProductStorage } from '../products-files-storage.service';
 
 @Component({
   selector: 'app-products-edit',
@@ -38,7 +37,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     private productService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,
-    private storage: FirebaseStorage
+    private storage: ProductStorage
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +89,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     this.productService.update(this.id, product).then(() => {
       //this.filesToDelete
       if (this.filesToDelete.length > 0) {
-        this.deleteFiles(this.id);
+        this.storage.removeFiles(this.filesToDelete, this.id);
       }
       if (this.selectedFiles && this.selectedFiles?.length > 0) {
         this.uploadFiles(this.id);
@@ -130,10 +129,6 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     }
     this.previews = this.previews?.filter((file) => file.name !== image.name);
     this.productImageUrl = this.previews.length > 0 ? this.previews[0].url : '/assets/img/no-image.png';
-  }
-
-  private async deleteFiles(id: string) {
-    return await Promise.all([...this.filesToDelete.map(async (file: string) => this.storage.removeFile(file, id))]);
   }
 
   displayCategory(category1: ProductCategory, category2: ProductCategory) {
