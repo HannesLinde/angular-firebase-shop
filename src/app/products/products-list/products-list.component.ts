@@ -29,7 +29,12 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'category', 'actions'];
 
-  constructor(private dialog: MatDialog, private store: Store<State>, private productService: ProductsService) {
+  constructor(
+    private dialog: MatDialog,
+    private store: Store<State>,
+    private productService: ProductsService,
+    private storage: FirebaseStorage
+  ) {
     this.dataSource = new MatTableDataSource<Product>([]);
   }
   ngAfterViewInit(): void {
@@ -52,9 +57,11 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
       data: { identifier: element.id, display: element.name },
     });
 
-    dialogRef.afterClosed().subscribe((result: string) => {
-      if (result) {
-        this.productService.delete(result);
+    dialogRef.afterClosed().subscribe((identifier: string) => {
+      if (identifier) {
+        this.productService.delete(identifier).then(() => {
+          this.deleteFiles(element.images, identifier);
+        });
       }
     });
   }
@@ -62,6 +69,10 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  private async deleteFiles(filesName: string[], id: string) {
+    return await Promise.all([...filesName.map(async (file: string) => this.storage.removeFile(file, id))]);
   }
 
   ngOnDestroy(): void {

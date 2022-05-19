@@ -36,6 +36,10 @@ mat-card {
   padding: 5px 5px;
 }
 
+.image-preview {
+  display: flex;
+}
+
 @media screen and (min-width: 600px) {
   .container {
     display: flex;
@@ -46,6 +50,7 @@ mat-card {
 @media screen and (max-width: 600px) {
 
   .image-preview {
+    display: flex;
     overflow-x: auto;
     white-space: nowrap;
     width: -webkit-fill-available;

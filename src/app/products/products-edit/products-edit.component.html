@@ -18,7 +18,14 @@
         </label>
         <!--span>{{ selectedFiles && selectedFiles.length > 0 ? selectedFiles.length + ' files selected' : '' }}</span-->
         <div class="image-preview">
-          <img *ngFor="let preview of previews" [src]="preview.url" mat-card-sm-image />
+          <div *ngFor="let preview of previews">
+            <div style="display: inherit; position: relative">
+              <img [src]="preview.url" mat-card-sm-image />
+              <a style="position: absolute; right: 0%; cursor: pointer" (click)="deleteFile(preview)">
+                <mat-icon>remove_circle</mat-icon>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 

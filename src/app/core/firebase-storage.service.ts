@@ -31,4 +31,10 @@ export class FirebaseStorage {
     );
     return uploadBytes(fileRef, file);
   }
+
+  async removeFile(fileName: string, dataPath?: string) {
+    const fileStoragePath = dataPath ? `images/products/${dataPath}/${fileName}` : `images/products/${fileName}`;
+    const fileRef = ref(this.storage, fileStoragePath);
+    return deleteObject(fileRef);
+  }
 }
