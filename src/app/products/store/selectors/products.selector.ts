@@ -6,8 +6,10 @@ export interface State extends AppState {
   products: ProductState;
 }
 
-const getProductCategoryFeatureState = createFeatureSelector<ProductState>('products');
+const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
-export const getProducts = createSelector(getProductCategoryFeatureState, (state) => state.products);
+export const getProducts = createSelector(getProductFeatureState, (state) => state.products);
 
-export const getProduct = createSelector(getProductCategoryFeatureState, (state) => state.product);
+export const getProduct = createSelector(getProductFeatureState, (state) => state.product);
+
+export const getError = createSelector(getProductFeatureState, (state) => state.error);

@@ -3,18 +3,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { debounceTime, Observable, Subscription } from 'rxjs';
 
 import { ProductCategory } from '@app/product-category/models/product-category.model';
 import { ProductCategoryActions } from '@app/product-category/store/actions';
 import { getProductCategories, State } from '@app/product-category/store/selectors/product-category.selector';
 
-import { getProducts, State as ProductState } from '@app/products/store/selectors/products.selector';
+import {
+  getError,
+  getProduct,
+  getProducts,
+  State as ProductState,
+} from '@app/products/store/selectors/products.selector';
 
 import { Product } from '../models/product.model';
 import { ProductsService } from '../products.service';
 import { ProductStorage } from '../products-files-storage.service';
 import { ImagePreview } from '@app/shared/images-preview/image-preview';
+import { ProductActions } from '../store/actions';
 
 @Component({
   selector: 'app-products-edit',
@@ -55,8 +61,14 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       images: [[]],
     });
 
+    this.productStore.select(getError).subscribe((err) => {
+      if (err) this.router.navigate(['404']);
+    });
+
     if (this.id) {
-      this.subscriptions.add(this.productStore.select(getProducts).subscribe(this.getProductFromStore));
+      this.subscriptions.add(
+        this.productStore.select(getProduct).pipe(debounceTime(500)).subscribe(this.getProductFromStore)
+      );
     }
   }
 
@@ -102,8 +114,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     return await Promise.all([this.selectedFiles?.map((file: File) => this.storage.uploadFile(file, id))]);
   }
 
-  private getProductFromStore = (products: Product[]) => {
-    const product = products.find((product) => product.id === this.id) as Product;
+  private getProductFromStore = (product: Product) => {
     if (product) {
       this.productForm.patchValue(product);
       this.previews = [];

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
+import { ProductResolverService } from './product-resolver.resolve';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { ProductsGridComponent } from './products-grid/products-grid.component';
 import { ProductsListComponent } from './products-list/products-list.component';
@@ -13,7 +14,7 @@ const routes: Routes = [
     children: [
       { path: '', component: ProductsListComponent },
       { path: 'add', component: ProductsEditComponent },
-      { path: 'edit/:id', component: ProductsEditComponent },
+      { path: 'edit/:id', component: ProductsEditComponent, resolve: { entity: ProductResolverService } },
     ],
   },
 ];

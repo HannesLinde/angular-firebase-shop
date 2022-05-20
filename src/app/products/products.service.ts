@@ -36,6 +36,18 @@ export class ProductsService extends FireBaseFacade<Product, ProductDto> {
       )
     )
   );
+
+  getProductWithCategory(id: string) {
+    return combineLatest([this.get(id), this.productCategory.getAll()]).pipe(
+      map(
+        ([product, categories]) =>
+          ({
+            ...product,
+            category: categories.find((c) => product?.categoryId === c.id),
+          } as Product)
+      )
+    );
+  }
   // to resolve reference to object
   override async add(data: Product) {
     const ref = collection(this.firestore, COLLECTION);

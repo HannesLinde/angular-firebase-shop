@@ -24,7 +24,7 @@ export class ProductEffect {
     return this.actions$.pipe(
       ofType(ProductActions.getProduct),
       mergeMap((action) =>
-        this.productsService.get(action.id).pipe(
+        this.productsService.getProductWithCategory(action.id).pipe(
           map((product) => ProductActions.getProductSuccess({ product })),
           catchError((error) => of(ProductActions.getProductFailure({ error })))
         )
