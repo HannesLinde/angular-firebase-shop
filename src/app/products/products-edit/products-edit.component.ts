@@ -88,8 +88,9 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   private addProduct(product: Product) {
     product.images.push(...(this.selectedFiles?.map((file: File) => file.name) || []));
     this.productService.add(product).then((id) => {
-      this.uploadFiles(id);
-      this.router.navigate(['/products'], { relativeTo: this.route });
+      this.uploadFiles(id).then(() => {
+        this.router.navigate(['/products'], { relativeTo: this.route });
+      });
     });
   }
 
@@ -103,15 +104,16 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       if (this.filesToDelete.length > 0) {
         this.storage.removeFiles(this.filesToDelete, this.id);
       }
-      if (this.selectedFiles && this.selectedFiles?.length > 0) {
-        this.uploadFiles(this.id);
-      }
-      this.router.navigate(['/products'], { relativeTo: this.route });
+      this.uploadFiles(this.id).then(() => {
+        this.router.navigate(['/products'], { relativeTo: this.route });
+      });
     });
   }
 
   private async uploadFiles(id?: string) {
-    return await Promise.all([this.selectedFiles?.map((file: File) => this.storage.uploadFile(file, id))]);
+    return Promise.all([
+      ...(this.selectedFiles ? this.selectedFiles?.map((file: File) => this.storage.uploadFile(file, id)) : []),
+    ]);
   }
 
   private getProductFromStore = (product: Product) => {

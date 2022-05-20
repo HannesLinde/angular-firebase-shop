@@ -3,7 +3,7 @@ import { State } from '@app/product-category/store/selectors/product-category.se
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ProductsService } from './products.service';
-import { ProductPageActions } from './store/actions';
+import { ProductActions, ProductPageActions } from './store/actions';
 import { changeDisplay } from './store/selectors/products.selector';
 
 @Component({
@@ -16,6 +16,7 @@ export class ProductsComponent implements OnInit {
   displayMode$!: Observable<string>;
 
   ngOnInit(): void {
+    this.store.dispatch(ProductActions.loadProducts());
     this.displayMode$ = this.store.select(changeDisplay);
   }
 }

@@ -19,7 +19,6 @@ export class ProductsGridComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productWithCategories$ = this.store.select(getProducts);
-    this.store.dispatch(ProductActions.loadProducts());
   }
 
   ngOnDestroy(): void {}

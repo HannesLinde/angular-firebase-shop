@@ -46,7 +46,6 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(ProductActions.loadProducts());
     this.sub = this.store.select(getProducts).subscribe((data: Product[]) => {
       this.dataSource.data = data;
     });
