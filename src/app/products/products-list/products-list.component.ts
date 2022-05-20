@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -10,6 +10,7 @@ import { Product } from '../models/product.model';
 import { ProductStorage } from '../products-files-storage.service';
 import { ProductsService } from '../products.service';
 import { ProductActions } from '../store/actions';
+import { displayMode } from '../store/actions/products-page.action';
 import { getProducts, State } from '../store/selectors/products.selector';
 import { ProductsListDataSource } from './products-list-datasource';
 
@@ -69,6 +70,10 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onChangeDisplay() {
+    this.store.dispatch(displayMode({ displayMode: 'Grid' }));
   }
 
   ngOnDestroy(): void {

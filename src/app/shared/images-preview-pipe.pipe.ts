@@ -2,8 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ImagePreview } from '@app/shared/images-preview/image-preview';
 
 //impure because of the previews which is updated in an async function (not detected as it is array)
-@Pipe({ name: 'imagePipe', pure: false })
-export class ImagePipe implements PipeTransform {
+@Pipe({ name: 'imagesPreviewPipe', pure: false })
+export class ImagesPreviewPipe implements PipeTransform {
   transform(selectedImage: any, previews: ImagePreview[], defaultImage: string) {
     return (selectedImage =
       previews.length > 0

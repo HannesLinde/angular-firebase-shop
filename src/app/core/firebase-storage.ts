@@ -10,6 +10,7 @@ import {
 } from '@angular/fire/storage';
 
 import {} from '../../environments/environment';
+import { encodeUrl } from './helpers/encoder-decoder';
 
 export abstract class FirebaseStorage {
   constructor(private relativeStoragePath: string) {}
@@ -22,11 +23,7 @@ export abstract class FirebaseStorage {
       ? `${this.relativeStoragePath}${dataPath}/${fileName}`
       : `${this.relativeStoragePath}${fileName}`;
     const fileRef = ref(this.getStorage(), fileStoragePath);
-    // to avoid using getDownloadURL and sending many requests to get url -> we build it
-    const url = `https://firebasestorage.googleapis.com/v0/b/${fileRef.bucket}/o/${encodeURIComponent(
-      fileStoragePath
-    )}?alt=media`;
-    return url;
+    return encodeUrl(fileRef.bucket, fileStoragePath);
   }
 
   async uploadFile(file: File, dataPath?: string) {

@@ -11,12 +11,9 @@ const routes: Routes = [
   {
     path: '',
     component: ProductsComponent,
-    children: [
-      { path: '', component: ProductsListComponent },
-      { path: 'add', component: ProductsEditComponent },
-      { path: 'edit/:id', component: ProductsEditComponent, resolve: { entity: ProductResolverService } },
-    ],
   },
+  { path: 'add', component: ProductsEditComponent },
+  { path: 'edit/:id', component: ProductsEditComponent, resolve: { entity: ProductResolverService } },
 ];
 
 @NgModule({

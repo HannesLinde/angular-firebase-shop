@@ -1,17 +1,19 @@
 import { Product } from '@app/products/models/product.model';
 import { createReducer, on } from '@ngrx/store';
-import { ProductActions } from '../actions';
+import { ProductActions, ProductPageActions } from '../actions';
 
 export interface ProductState {
   product: any;
   products: Product[];
   error: string;
+  displayMode: string;
 }
 
 export const initialState: ProductState = {
   products: [],
   product: undefined,
   error: '',
+  displayMode: 'Grid',
 };
 
 export const productReducer = createReducer<ProductState>(
@@ -42,6 +44,12 @@ export const productReducer = createReducer<ProductState>(
       ...state,
       product: undefined,
       error: action.error,
+    };
+  }),
+  on(ProductPageActions.displayMode, (state, action): ProductState => {
+    return {
+      ...state,
+      displayMode: action.displayMode,
     };
   })
 );

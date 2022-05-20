@@ -1,1 +1,3 @@
-<router-outlet></router-outlet>
+<app-products-grid [hidden]="(displayMode$ | async) !== 'Grid'"> </app-products-grid>
+
+<app-products-list [hidden]="(displayMode$ | async) !== 'List'"> </app-products-list>

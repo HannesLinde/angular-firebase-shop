@@ -1,6 +1,9 @@
 <div class="mat-elevation-z8">
   <app-filter (filter)="applyFilter($event)">
-    <button mat-button mat-mini-fab routerLink="add" color="primary">
+    <button mat-icon-button focusable="false" (click)="onChangeDisplay()">
+      <mat-icon>list</mat-icon>
+    </button>
+    <button mat-button mat-mini-fab [routerLink]="['add']" color="primary">
       <mat-icon>add</mat-icon>
     </button>
   </app-filter>

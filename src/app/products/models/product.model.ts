@@ -11,6 +11,7 @@ export class Product {
   description?: string;
   type: ProductType;
   images: string[];
+  mainImage: string | undefined;
 
   constructor(
     id: string,
@@ -30,5 +31,6 @@ export class Product {
     this.images = images || [];
     this.type = type;
     this.description = description;
+    this.mainImage = images.length > 0 ? images[0] : undefined;
   }
 }
