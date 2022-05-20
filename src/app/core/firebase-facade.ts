@@ -10,7 +10,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 
-import { catchError, map, tap, Observable, throwError } from 'rxjs';
+import { catchError, map, shareReplay, Observable, throwError } from 'rxjs';
 import { Adapter } from './adapter';
 export abstract class FireBaseFacade<T, R> {
   constructor(private collection: string) {}
@@ -23,7 +23,8 @@ export abstract class FireBaseFacade<T, R> {
     const ref = collection(this.getFirestore(), this.collection);
     return collectionData(ref, { idField: 'id' }).pipe(
       map((object) => (object as R[]).map((item) => this.getAdapter().toModel(item))),
-      catchError(this.handleError)
+      catchError(this.handleError),
+      shareReplay(1)
     );
   }
 

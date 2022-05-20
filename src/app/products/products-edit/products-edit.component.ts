@@ -104,17 +104,19 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   private getProductFromStore = (products: Product[]) => {
     const product = products.find((product) => product.id === this.id) as Product;
-    this.productForm.patchValue(product);
-    this.previews = [];
+    if (product) {
+      this.productForm.patchValue(product);
+      this.previews = [];
 
-    if (product.images && product.images.length > 0) {
-      this.previews.push(
-        ...product.images.map((image) => ({
-          url: this.getImageUrlFromStore(image, this.id),
-          stored: true,
-          name: image,
-        }))
-      );
+      if (product.images && product.images.length > 0) {
+        this.previews.push(
+          ...product.images.map((image) => ({
+            url: this.getImageUrlFromStore(image, this.id),
+            stored: true,
+            name: image,
+          }))
+        );
+      }
     }
   };
 
