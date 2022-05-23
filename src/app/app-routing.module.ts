@@ -7,18 +7,20 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    children: [
+      {
+        path: 'product-category',
+        loadChildren: () => import('./product-category/product-category.module').then((m) => m.ProductCategoryModule),
+      },
+      {
+        path: 'products',
+        loadChildren: () => import('./products/products.module').then((m) => m.ProductsModule),
+      },
+    ],
   },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then((m) => m.LoginModule),
-  },
-  {
-    path: 'product-category',
-    loadChildren: () => import('./product-category/product-category.module').then((m) => m.ProductCategoryModule),
-  },
-  {
-    path: 'products',
-    loadChildren: () => import('./products/products.module').then((m) => m.ProductsModule),
   },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', pathMatch: 'full', redirectTo: '404' },
