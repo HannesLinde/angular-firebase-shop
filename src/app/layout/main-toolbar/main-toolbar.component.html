@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="toggle($event)">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+
+  <span style="flex: 1 1 auto"></span>
+
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Logout</button>
+  </mat-menu>
+</mat-toolbar>
