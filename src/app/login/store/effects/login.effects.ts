@@ -20,7 +20,7 @@ export class LoginEffect {
         from(this.authenticationService.SignIn(action.loginData.email, action.loginData.password)).pipe(
           map((user) => {
             this.router.navigate(['']);
-            return LoginApiActions.signInSuccess({ user: user.user });
+            return LoginApiActions.signInSuccess({ user: user ? user : null });
           }),
           catchError((errorMessage) => of(LoginApiActions.signInError({ errorMessage })))
         )
@@ -35,7 +35,7 @@ export class LoginEffect {
         from(this.authenticationService.SignUp(action.loginData.email, action.loginData.password)).pipe(
           map((user) => {
             this.router.navigate(['']);
-            return LoginApiActions.signUpSuccess({ user: user.user });
+            return LoginApiActions.signUpSuccess({ user: user ? user : null });
           }),
           catchError((errorMessage) => of(LoginApiActions.signUpError({ errorMessage })))
         )

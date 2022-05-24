@@ -38,6 +38,5 @@
 
   <mat-card *ngIf="use$ | async as userData">
     <button mat-stroked-button type="button" [disabled]="!userData" (click)="logOut()">Logout</button>
-    <pre>{{ userData | json }}</pre>
   </mat-card>
 </div>

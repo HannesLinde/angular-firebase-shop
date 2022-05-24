@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '@angular/fire/auth';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { User } from '@app/core/services/user';
 import { State, Store } from '@ngrx/store';
-import { NEVER, Observable, of } from 'rxjs';
+import { from, NEVER, Observable, of } from 'rxjs';
 import { AuthenticationService } from '../../core/services/Auth.service';
 import { LoginPageActions } from '../store/actions';
 import { UserState } from '../store/reducers/login.reducer';
@@ -30,13 +30,9 @@ export class SignInComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  user = localStorage['user'] !== 'null' ? true : false;
+  use$?: Observable<User | null>;
 
-  //userData = this.auth.userData;
-
-  use$?: Observable<User | undefined>;
-
-  constructor(private auth: AuthenticationService, private userStore: Store<UserState>) {}
+  constructor(private userStore: Store<UserState>, private auth: AuthenticationService) {}
   ngOnInit(): void {
     //this.userData = this.auth.userData;
     //console.log('test' + this.userData);
@@ -46,7 +42,7 @@ export class SignInComponent implements OnInit {
   submitLoginData() {
     /*console.log('login submitted');
     console.log(this.logInFormGroup.value);*/
-    //this.auth.SignIn(this.logInFormGroup.value.email, this.logInFormGroup.value.password);
+    //this.use$ = from(this.auth.SignIn(this.logInFormGroup.value.email, this.logInFormGroup.value.password));
     this.userStore.dispatch(LoginPageActions.signIn({ loginData: this.logInFormGroup.value }));
   }
 

@@ -1,15 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from '@angular/fire/auth';
 import { LoginApiActions } from '@app/login/store/actions';
+import { User } from '@app/core/services/user';
 
 export interface UserState {
-  user: User | undefined;
+  user: User | null;
   isAuthenticated: boolean;
   error: string;
 }
 
 export const initialState: UserState = {
-  user: undefined,
+  user: null,
   isAuthenticated: false,
   error: '',
 };
@@ -47,7 +47,7 @@ export const loginReducer = createReducer(
   on(LoginApiActions.logOutSuccess, (state) => {
     return {
       ...state,
-      user: undefined,
+      user: null,
       isAuthenticated: false,
       error: '',
     };
@@ -56,6 +56,13 @@ export const loginReducer = createReducer(
     return {
       ...state,
       error: errorMessage,
+    };
+  }),
+  on(LoginApiActions.getState, (state, { user }): UserState => {
+    return {
+      ...state,
+      user: user,
+      error: '',
     };
   })
 );
