@@ -1,5 +1,5 @@
 <div class="signin-content">
-  <mat-card *ngIf="!(use$ | async)">
+  <mat-card *ngIf="!(user$ | async)">
     <mat-card-title>Login</mat-card-title>
     <mat-card-subtitle
       >No account yet?
@@ -36,7 +36,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="use$ | async as userData">
+  <mat-card *ngIf="user$ | async as userData">
     <button mat-stroked-button type="button" [disabled]="!userData" (click)="logOut()">Logout</button>
   </mat-card>
 </div>

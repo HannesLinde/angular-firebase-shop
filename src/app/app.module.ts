@@ -24,6 +24,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 //Directives
 import { AuthenticationService } from '@app/core/services/Auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LoginModule } from './login/login.module';
 
 //Pipes
 
@@ -40,6 +41,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     LayoutModule,
+    LoginModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
