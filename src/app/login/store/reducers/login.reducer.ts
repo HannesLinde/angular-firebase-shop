@@ -1,16 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
 import { LoginApiActions } from '@app/login/store/actions';
 import { User } from '@app/core/services/user';
+import { getItem } from '@app/core/helpers/Storage';
 
 export interface UserState {
   user: User | null;
-  isAuthenticated: boolean;
   error: string;
 }
 
 export const initialState: UserState = {
-  user: null,
-  isAuthenticated: false,
+  user: getItem('user'),
   error: '',
 };
 
@@ -20,7 +19,6 @@ export const loginReducer = createReducer(
     return {
       ...state,
       user: user,
-      isAuthenticated: true,
       error: '',
     };
   }),
@@ -34,7 +32,6 @@ export const loginReducer = createReducer(
     return {
       ...state,
       user: user,
-      isAuthenticated: true,
       error: '',
     };
   }),

@@ -3,6 +3,7 @@ import { Auth, signInWithEmailAndPassword, User as AuthUser } from '@angular/fir
 import { Router } from '@angular/router';
 import { createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { User } from './user';
+import { deleteItem, saveItem } from '../helpers/Storage';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,13 @@ import { User } from './user';
 export class AuthenticationService {
   constructor(private readonly afAuth: Auth) {
     this.afAuth.onAuthStateChanged(async (authUser) => {
-      // update authentification state
+      console.log('state changement');
+
       if (authUser) {
         const user = this.toUser(authUser, await authUser.getIdToken());
-        localStorage.setItem('user', JSON.stringify(user));
+        saveItem('user', user);
       } else {
-        localStorage.removeItem('user');
+        deleteItem('user');
       }
     });
   }
