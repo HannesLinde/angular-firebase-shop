@@ -15,7 +15,7 @@
     grid-row-gap: 10px;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 720px) {
     
     .container{
         display: grid;
