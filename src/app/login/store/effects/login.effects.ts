@@ -4,6 +4,8 @@ import { LoginApiActions, LoginPageActions } from '../actions';
 import { mergeMap, map, catchError, of, from, tap } from 'rxjs';
 import { AuthenticationService } from '@app/core/services/Auth.service';
 import { Router } from '@angular/router';
+import { UserSerivce } from '@app/login/user.service';
+import { deleteItem, saveItem } from '@app/core/helpers/Storage';
 
 @Injectable()
 export class LoginEffect {
@@ -32,9 +34,16 @@ export class LoginEffect {
     return this.actions$.pipe(
       ofType(LoginPageActions.signUp),
       mergeMap((action) =>
-        from(this.authenticationService.SignUp(action.loginData.email, action.loginData.password)).pipe(
+        from(
+          this.authenticationService.SignUp(
+            action.loginData.email,
+            action.loginData.password,
+            action.loginData.displayName
+          )
+        ).pipe(
           map((user) => {
             this.router.navigate(['']);
+            saveItem('user', user);
             return LoginApiActions.signUpSuccess({ user: user ? user : null });
           }),
           catchError((errorMessage) => of(LoginApiActions.signUpError({ errorMessage })))
@@ -48,7 +57,10 @@ export class LoginEffect {
       ofType(LoginPageActions.logOut),
       mergeMap(() =>
         from(this.authenticationService.SignOut()).pipe(
-          map(() => LoginApiActions.logOutSuccess()),
+          map(() => {
+            deleteItem('user');
+            return LoginApiActions.logOutSuccess();
+          }),
           catchError((errorMessage) => of(LoginApiActions.logOutError({ errorMessage })))
         )
       )

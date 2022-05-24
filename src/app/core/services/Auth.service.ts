@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, User as AuthUser } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, User as AuthUser, updateProfile } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { User } from './user';
 import { deleteItem, saveItem } from '../helpers/Storage';
+import { UserSerivce } from '@app/login/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private readonly afAuth: Auth) {
+  constructor(private readonly afAuth: Auth, private userService: UserSerivce) {
     this.afAuth.onAuthStateChanged(async (authUser) => {
-      console.log('state changement');
-
       if (authUser) {
         const user = this.toUser(authUser, await authUser.getIdToken());
         saveItem('user', user);
@@ -22,10 +21,17 @@ export class AuthenticationService {
     });
   }
 
-  async SignUp(email: string, password: string): Promise<User | undefined> {
-    const user = await createUserWithEmailAndPassword(this.afAuth, email, password);
+  async SignUp(email: string, password: string, displayName: string | null): Promise<User | undefined> {
+    const authUser = await createUserWithEmailAndPassword(this.afAuth, email, password);
     return await new Promise(async (resolve, reject) => {
-      return resolve(user ? this.toUser(user.user, await user.user.getIdToken()) : undefined);
+      if (authUser) {
+        const user = this.toUser(authUser.user, await authUser.user.getIdToken());
+        user.displayName = displayName;
+        await this.userService.update(user);
+        await this.SetUserData(user);
+        return resolve(user);
+      }
+      return reject(undefined);
     });
   }
 
@@ -40,20 +46,11 @@ export class AuthenticationService {
     return await this.afAuth.signOut();
   }
 
-  SetUserData(user: any) {
-    /*const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const userData = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });*/
-    console.log('Set User Data!');
+  async SetUserData(user: User) {
+    if (this.afAuth.currentUser)
+      await updateProfile(this.afAuth.currentUser, {
+        displayName: user.displayName,
+      });
   }
 
   SendVerificationMail() {

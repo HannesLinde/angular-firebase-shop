@@ -8,6 +8,7 @@ import { LoginEffect } from '@app/login/store/effects/login.effects';
 import { loginReducer } from '@app/login/store/reducers/login.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { UserSerivce } from './user.service';
 
 @NgModule({
   declarations: [LoginRoutingModule.components],
@@ -19,5 +20,6 @@ import { EffectsModule } from '@ngrx/effects';
     StoreModule.forFeature('users', loginReducer),
     EffectsModule.forFeature([LoginEffect]),
   ],
+  providers: [UserSerivce],
 })
 export class LoginModule {}

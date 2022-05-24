@@ -1,12 +1,17 @@
 <div class="signin-content">
   <mat-card>
     <mat-card-title>Signup</mat-card-title>
-    <!--mat-card-subtitle
-        >Currently not working. Create your account. Already have an account?
-        <span (click)="signUp = false" style="text-decoration: underline; cursor: pointer">Login</span></mat-card-subtitle
-      -->
+    <mat-card-subtitle
+      >Create your account. Already have an account? <a routerLink="/login">Signin</a>!</mat-card-subtitle
+    >
     <mat-card-content>
       <form [formGroup]="signUpFormGroup" (ngSubmit)="submitSignUp()" data-test="login-form">
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="displayName" />
+          </mat-form-field>
+        </div>
         <div>
           <mat-form-field class="full-width-input">
             <mat-label>Email</mat-label>
