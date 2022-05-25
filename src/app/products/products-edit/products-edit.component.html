@@ -9,7 +9,12 @@
         [(filesToDelete)]="filesToDelete"
         [(selectedFiles)]="selectedFiles"
       ></app-files-upload>
-      <form [formGroup]="productForm" (ngSubmit)="save()" style="flex: 1 1 100%; flex: 1">
+      <form
+        *ngIf="user$ | async as user"
+        [formGroup]="productForm"
+        (ngSubmit)="save(user)"
+        style="flex: 1 1 100%; flex: 1"
+      >
         <div class="form-container">
           <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>

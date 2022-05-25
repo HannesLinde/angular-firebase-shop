@@ -19,5 +19,6 @@
       mat-card-lg-image
       [src]="product.mainImage | imageUrlPipe: 'images/products/':'/assets/img/no-image.png':product.id"
     />
+    <mat-card-content> {{ product.name }} ({{ product.price | currency: 'EUR':'symbol' }}) </mat-card-content>
   </mat-card>
 </div>

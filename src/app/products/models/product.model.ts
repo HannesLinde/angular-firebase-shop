@@ -12,6 +12,7 @@ export class Product {
   type: ProductType;
   images: string[];
   mainImage: string | undefined;
+  ownerId: string;
 
   constructor(
     id: string,
@@ -20,6 +21,7 @@ export class Product {
     categoryId: string,
     type: ProductType,
     images: string[],
+    ownerId: string,
     description?: string,
     category?: ProductCategory
   ) {
@@ -29,6 +31,7 @@ export class Product {
     this.categoryId = categoryId;
     this.category = category;
     this.images = images || [];
+    this.ownerId = ownerId;
     this.type = type;
     this.description = description;
     this.mainImage = images.length > 0 ? images[0] : undefined;

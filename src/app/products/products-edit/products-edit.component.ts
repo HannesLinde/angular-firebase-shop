@@ -21,6 +21,9 @@ import { ProductsService } from '../products.service';
 import { ProductStorage } from '../products-files-storage.service';
 import { ImagePreview } from '@app/shared/images-preview/image-preview';
 import { ProductActions } from '../store/actions';
+import { User } from '@app/core/services/user';
+import { UserState } from '@app/login/store/reducers/login.reducer';
+import { getAuthentification } from '@app/login/store/selectors/login.selector';
 
 @Component({
   selector: 'app-products-edit',
@@ -33,13 +36,14 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   id!: string;
   selectedFiles?: File[];
   filesToDelete: string[] = [];
-
+  user$!: Observable<User | null>;
   previews: ImagePreview[] = [];
   private subscriptions = new Subscription();
   constructor(
     private formBuilder: FormBuilder,
     private productCategoryStore: Store<State>,
     private productStore: Store<ProductState>,
+    private userStore: Store<UserState>,
     private productService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,
@@ -48,6 +52,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productCategories$ = this.productCategoryStore.select(getProductCategories);
+    this.user$ = this.userStore.select(getAuthentification);
     // as they are in different store
     this.productCategoryStore.dispatch(ProductCategoryActions.loadProductCategories());
 
@@ -72,10 +77,11 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  save() {
+  save(user: User) {
     if (this.productForm.valid) {
       //Product type will depend from the connected user
-      const product: Product = Object.assign({ type: 'CUSTOM' }, this.productForm.value);
+      const product: Product = Object.assign({ type: user.admin ? 'ENTREPRISE' : 'CUSTOM' }, this.productForm.value);
+      product.ownerId = user.uid;
       // if file not uploaded
       if (this.id) {
         this.updateProduct(product);

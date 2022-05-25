@@ -8,4 +8,5 @@ export interface ProductDto {
   description?: string;
   type: ProductType;
   images: string[];
+  ownerId: string;
 }

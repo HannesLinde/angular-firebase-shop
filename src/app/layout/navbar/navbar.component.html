@@ -1,3 +1,4 @@
+<app-main-toolbar (toggleSideNave)="toggel()"></app-main-toolbar>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     class="sidenav"
@@ -15,8 +16,7 @@
       <a mat-list-item [routerLink]="['/products']">Products</a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <app-main-toolbar (toggleSideNave)="toggel()"></app-main-toolbar>
+  <mat-sidenav-content style="height: 90%">
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

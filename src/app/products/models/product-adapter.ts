@@ -13,6 +13,7 @@ export class ProductAdapter implements Adapter<Product, ProductDto> {
       data.category.path.split('/')[1],
       data.type,
       data.images,
+      data.ownerId,
       data.description
     );
   }
