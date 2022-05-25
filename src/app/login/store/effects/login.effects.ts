@@ -59,6 +59,7 @@ export class LoginEffect {
         from(this.authenticationService.SignOut()).pipe(
           map(() => {
             deleteItem('user');
+            this.router.navigateByUrl('/');
             return LoginApiActions.logOutSuccess();
           }),
           catchError((errorMessage) => of(LoginApiActions.logOutError({ errorMessage })))

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { UserState } from '@app/login/store/reducers/login.reducer';
-import { getAuthentification } from '@app/login/store/selectors/login.selector';
+import { User } from '@app/core/services/user';
 import { select, Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { UserState } from './store/reducers/login.reducer';
+import { getAuthentification } from './store/selectors/login.selector';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuardGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(private userStore: Store<UserState>, private route: Router) {}
 
   canActivate(
@@ -17,12 +18,12 @@ export class AuthGuardGuard implements CanActivate {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.userStore.pipe(
       select(getAuthentification),
-      map((user) => {
-        if (!user) {
-          this.route.navigateByUrl('/login');
-          return false;
+      map((user: User | null) => {
+        if (user && user.admin) {
+          return true;
         }
-        return true;
+        console.error('Access denied');
+        return false;
       })
     );
   }

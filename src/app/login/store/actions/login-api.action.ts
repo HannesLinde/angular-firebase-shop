@@ -12,5 +12,3 @@ export const signUpError = createAction('[Login API] Sign up Error', props<{ err
 export const logOutSuccess = createAction('[Login API] Log out Success');
 
 export const logOutError = createAction('[Login API] Log out Error', props<{ errorMessage: string }>());
-
-export const getState = createAction('[Login API] Get state', props<{ user: User | null }>());

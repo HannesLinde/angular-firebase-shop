@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '@app/dashboard/dashboard.component';
-import { AuthGuardGuard } from './login/auth-guard.guard';
+import { AdminGuard } from './login/admin.guard';
+import { AuthGuard } from './login/auth.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -12,7 +13,7 @@ const routes: Routes = [
       {
         path: 'product-category',
         loadChildren: () => import('./product-category/product-category.module').then((m) => m.ProductCategoryModule),
-        canActivate: [AuthGuardGuard],
+        canActivate: [AuthGuard, AdminGuard],
       },
       {
         path: 'products',

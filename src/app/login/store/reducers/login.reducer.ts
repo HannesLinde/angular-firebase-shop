@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { LoginApiActions } from '@app/login/store/actions';
+import { LoginApiActions, LoginPageActions } from '@app/login/store/actions';
 import { User } from '@app/core/services/user';
 import { getItem } from '@app/core/helpers/Storage';
 
@@ -55,7 +55,7 @@ export const loginReducer = createReducer(
       error: errorMessage,
     };
   }),
-  on(LoginApiActions.getState, (state, { user }): UserState => {
+  on(LoginPageActions.updateState, (state, { user }): UserState => {
     return {
       ...state,
       user: user,

@@ -5,17 +5,24 @@ import { createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { User } from './user';
 import { deleteItem, saveItem } from '../helpers/Storage';
 import { UserSerivce } from '@app/login/user.service';
+import { UserState } from '@app/login/store/reducers/login.reducer';
+import { Store } from '@ngrx/store';
+import { LoginPageActions } from '@app/login/store/actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private readonly afAuth: Auth, private userService: UserSerivce) {
+  constructor(private readonly afAuth: Auth, private userService: UserSerivce, private userStore: Store<UserState>) {
     this.afAuth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
         const user = this.toUser(authUser, await authUser.getIdToken());
-        saveItem('user', user);
+        // retrieve additional information
+        const userInfo = Object.assign(user, await this.userService.get(user.uid));
+        this.userStore.dispatch(LoginPageActions.updateState({ user: userInfo }));
+        saveItem('user', userInfo);
       } else {
+        this.userStore.dispatch(LoginPageActions.updateState({ user: null }));
         deleteItem('user');
       }
     });
@@ -72,6 +79,7 @@ export class AuthenticationService {
       refreshToken: authUser.refreshToken,
       phoneNumber: authUser.phoneNumber,
       photoURL: authUser.photoURL,
+      admin: false,
     };
   }
 }

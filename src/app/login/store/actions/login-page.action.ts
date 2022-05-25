@@ -1,3 +1,4 @@
+import { User } from '@app/core/services/user';
 import { createAction, props } from '@ngrx/store';
 
 export interface LoginData {
@@ -11,3 +12,5 @@ export const signIn = createAction('[Login Page] Sign in', props<{ loginData: Lo
 export const signUp = createAction('[Login Page] Sign up', props<{ loginData: LoginData }>());
 
 export const logOut = createAction('[Login Page] Log out');
+
+export const updateState = createAction('[Login Page] update state', props<{ user: User | null }>());
