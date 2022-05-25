@@ -1,0 +1,41 @@
+<ng-container *ngIf="user$ | async as user">
+  <mat-toolbar *ngIf="product$ | async as product">
+    <span class="filter-toolbar"></span>
+    <button mat-button mat-mini-fab [routerLink]="['/products/edit', product.id]" color="primary">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-toolbar>
+</ng-container>
+<mat-card>
+  <mat-card-content>
+    <div *ngIf="product$ | async as product" class="container">
+      <div class="fileupload">
+        <img
+          mat-card-lg-image
+          [src]="product.images[0] | imageUrlPipe: 'images/products/':'/assets/img/no-image.png':product.id"
+        />
+        <div>
+          <img
+            *ngFor="let image of product.images"
+            mat-card-sm-image
+            [src]="image | imageUrlPipe: 'images/products/':'/assets/img/no-image.png':product.id"
+          />
+        </div>
+      </div>
+
+      <div>
+        <div class="product-info">
+          <h1>{{ product.name }}</h1>
+          <br />
+          {{ product.price | currency: 'EUR':'symbol' }}
+          <br />
+          <br />
+          <h4>{{ product.category?.name }}</h4>
+          <!--div style="height: 1px; background-color: black"></div-->
+          <h1>Description</h1>
+          {{ product.description }}
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

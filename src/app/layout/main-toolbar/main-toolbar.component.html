@@ -9,9 +9,15 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item *ngIf="user$ | async; else logIn" (click)="logOut()">Log Out</button>
+    <button mat-menu-item *ngIf="user$ | async; else logIn" (click)="logOut()">
+      <mat-icon>settings_power</mat-icon>
+      <span>Log Out</span>
+    </button>
     <ng-template #logIn>
-      <button mat-menu-item routerLink="login">LogIn</button>
+      <button mat-menu-item routerLink="login">
+        <mat-icon>login</mat-icon>
+        <span>LogIn</span>
+      </button>
     </ng-template>
   </mat-menu>
 </mat-toolbar>

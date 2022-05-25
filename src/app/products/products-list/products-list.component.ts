@@ -3,9 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { User } from '@app/core/services/user';
+import { UserState } from '@app/login/store/reducers/login.reducer';
+import { getAuthentification } from '@app/login/store/selectors/login.selector';
 import { DeleteDialogComponent } from '@app/shared/delete-dialog/delete-dialog.component';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Product } from '../models/product.model';
 import { ProductStorage } from '../products-files-storage.service';
 import { ProductsService } from '../products.service';
@@ -29,12 +32,14 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'category', 'actions'];
+  user$?: Observable<User | null>;
 
   constructor(
     private dialog: MatDialog,
     private store: Store<State>,
     private productService: ProductsService,
-    private storage: ProductStorage
+    private storage: ProductStorage,
+    private userStore: Store<UserState>
   ) {
     this.dataSource = new MatTableDataSource<Product>([]);
   }
@@ -46,6 +51,7 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.user$ = this.userStore.select(getAuthentification);
     this.sub = this.store.select(getProducts).subscribe((data: Product[]) => {
       this.dataSource.data = data;
     });

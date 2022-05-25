@@ -11,9 +11,10 @@ import { ProductEffect } from './store/effects/products.effect';
 import { productReducer } from './store/reducers/products.reducer';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductStorage } from './products-files-storage.service';
+import { ProductsDetailComponent } from './products-detail/products-detail.component';
 
 @NgModule({
-  declarations: [ProductsRoutingModule.components],
+  declarations: [ProductsRoutingModule.components, ProductsDetailComponent],
   imports: [
     CommonModule,
     SharedModule,

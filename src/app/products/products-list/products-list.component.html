@@ -1,11 +1,13 @@
 <div class="mat-elevation-z8">
   <app-filter (filter)="applyFilter($event)">
-    <button mat-icon-button focusable="false" (click)="onChangeDisplay()">
-      <mat-icon>list</mat-icon>
-    </button>
-    <button mat-button mat-mini-fab [routerLink]="['add']" color="primary">
-      <mat-icon>add</mat-icon>
-    </button>
+    <div *ngIf="user$ | async as user">
+      <button mat-icon-button focusable="false" (click)="onChangeDisplay()" *ngIf="user.admin">
+        <mat-icon>list</mat-icon>
+      </button>
+      <button mat-button mat-mini-fab [routerLink]="['add']" color="primary">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
   </app-filter>
 
   <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
@@ -22,8 +24,8 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button focusable="false" [routerLink]="['edit', element.id]">
-          <mat-icon color="primary">edit</mat-icon>
+        <button mat-icon-button focusable="false" [routerLink]="['view', element.id]">
+          <mat-icon color="primary">preview</mat-icon>
         </button>
         <button mat-icon-button focusable="false" (click)="openDialog(element)">
           <mat-icon color="warn">delete</mat-icon>
