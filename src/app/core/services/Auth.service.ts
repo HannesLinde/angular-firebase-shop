@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, User as AuthUser, updateProfile } from '@angular/fire/auth';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  User as AuthUser,
+  updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { User } from './user';
@@ -58,6 +65,18 @@ export class AuthenticationService {
       await updateProfile(this.afAuth.currentUser, {
         displayName: user.displayName,
       });
+  }
+
+  singWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
+  private oAuthLogin(provider: GoogleAuthProvider) {
+    return signInWithPopup(this.afAuth, provider).then((credential) => {
+      console.log(credential.user);
+      //this.updateUserData(credential.user)
+    });
   }
 
   SendVerificationMail() {

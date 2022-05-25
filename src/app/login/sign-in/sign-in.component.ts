@@ -38,6 +38,10 @@ export class SignInComponent implements OnInit {
     this.userStore.dispatch(LoginPageActions.signIn({ loginData: this.logInFormGroup.value }));
   }
 
+  signInwithGoogle() {
+    this.auth.singWithGoogle();
+  }
+
   logOut() {
     this.userStore.dispatch(LoginPageActions.logOut());
   }
