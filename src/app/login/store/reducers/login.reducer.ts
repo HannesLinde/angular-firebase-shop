@@ -9,7 +9,7 @@ export interface UserState {
 }
 
 export const initialState: UserState = {
-  user: getItem('user'),
+  user: null, // this was used to retrieve user when refresh : getItem('user'), but this may no needed onAuthStateChanged is called
   error: '',
 };
 
