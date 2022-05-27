@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { User } from '@app/core/services/user';
@@ -14,6 +14,7 @@ import { getAuthentification, getError, getLoading } from '../store/selectors/lo
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class SignInComponent implements OnInit {
   logInFormGroup!: FormGroup;

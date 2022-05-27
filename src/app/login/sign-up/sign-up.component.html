@@ -10,7 +10,7 @@
           {{ errorMessage }}
         </div>
       </div>
-      <form [formGroup]="signUpFormGroup" (ngSubmit)="submitSignUp()" data-test="login-form">
+      <form [formGroup]="signUpFormGroup" (ngSubmit)="submitSignUp()">
         <div>
           <mat-form-field class="full-width-input">
             <mat-label>Name</mat-label>
@@ -31,7 +31,7 @@
         <div>
           <mat-form-field class="full-width-input">
             <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password" data-test="login-password" />
+            <input matInput formControlName="password" type="password" />
           </mat-form-field>
         </div>
         <button mat-stroked-button type="submit" [disabled]="signUpFormGroup.invalid">Sign Up</button>
