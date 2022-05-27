@@ -4,12 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ProductCategory } from './models/product-category.model';
 import { ProductCategoryDialogComponent } from './product-category-dialog/product-category-dialog.component';
 import { ProductCategoryService } from './product-category.service';
 import { ProductCategoryActions, ProductCategoryPageActions } from './store/actions';
-import { getProductCategories, State } from './store/selectors/product-category.selector';
+import { getError, getProductCategories, State } from './store/selectors/product-category.selector';
 
 @Component({
   selector: 'app-product-category',
@@ -22,7 +22,7 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
   @ViewChild(MatTable) table!: MatTable<ProductCategory>;
   dataSource: MatTableDataSource<ProductCategory>;
   private sub: Subscription | null = null;
-
+  errorMessage$!: Observable<string>;
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'actions'];
 
@@ -39,6 +39,7 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   ngOnInit(): void {
+    this.errorMessage$ = this.store.select(getError);
     this.store.dispatch(ProductCategoryActions.loadProductCategories());
     this.sub = this.store.select(getProductCategories).subscribe((data: ProductCategory[]) => {
       this.dataSource.data = data;

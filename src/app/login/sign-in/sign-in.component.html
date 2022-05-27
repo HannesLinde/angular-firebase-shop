@@ -7,6 +7,11 @@
       !</mat-card-subtitle
     >
     <mat-card-content>
+      <div *ngIf="errorMessage$ | async as errorMessage" class="error-block">
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      </div>
       <form [formGroup]="logInFormGroup" (ngSubmit)="submitLoginData()" data-test="login-form">
         <div>
           <mat-form-field class="full-width-input">

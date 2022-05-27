@@ -8,7 +8,7 @@ import { from, NEVER, Observable, of } from 'rxjs';
 import { AuthenticationService } from '../../core/services/Auth.service';
 import { LoginPageActions } from '../store/actions';
 import { UserState } from '../store/reducers/login.reducer';
-import { getAuthentification } from '../store/selectors/login.selector';
+import { getAuthentification, getError } from '../store/selectors/login.selector';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
   logInFormGroup!: FormGroup;
 
   matcher: MyErrorStateMatcher;
-
+  errorMessage$!: Observable<string>;
   user$?: Observable<User | null>;
 
   constructor(private userStore: Store<UserState>, private auth: AuthenticationService, private fb: FormBuilder) {
@@ -27,7 +27,7 @@ export class SignInComponent implements OnInit {
   }
   ngOnInit(): void {
     this.user$ = this.userStore.select(getAuthentification);
-
+    this.errorMessage$ = this.userStore.select(getError);
     this.logInFormGroup = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),

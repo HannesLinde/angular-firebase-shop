@@ -25,11 +25,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthenticationService } from '@app/core/services/Auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginModule } from './login/login.module';
+import { ShellComponent } from './shell/shell.component';
 
 //Pipes
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent],
+  declarations: [AppComponent, DashboardComponent, ShellComponent],
   imports: [
     BrowserModule,
     CoreModule,

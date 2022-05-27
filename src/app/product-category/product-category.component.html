@@ -4,7 +4,11 @@
       <mat-icon>add</mat-icon>
     </button>
   </app-filter>
-
+  <div *ngIf="errorMessage$ | async as errorMessage" class="error-block">
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
   <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
     <!-- Name Column -->
     <ng-container matColumnDef="name">

@@ -4,11 +4,12 @@ import { DashboardComponent } from '@app/dashboard/dashboard.component';
 import { AdminGuard } from './login/admin.guard';
 import { AuthGuard } from './login/auth.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ShellComponent } from './shell/shell.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent,
+    component: ShellComponent,
     children: [
       {
         path: 'product-category',
@@ -18,6 +19,15 @@ const routes: Routes = [
       {
         path: 'products',
         loadChildren: () => import('./products/products.module').then((m) => m.ProductsModule),
+      },
+      {
+        path: '',
+        redirectTo: 'products',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
       },
     ],
   },
