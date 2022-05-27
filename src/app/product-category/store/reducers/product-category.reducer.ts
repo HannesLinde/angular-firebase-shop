@@ -14,10 +14,10 @@ export const initialState: ProductCategoryState = {
 
 export const productReducer = createReducer<ProductCategoryState>(
   initialState,
-  on(ProductCategoryActions.loadProductCategoriesSuccess, (state, action): ProductCategoryState => {
+  on(ProductCategoryActions.loadProductCategoriesSuccess, (state, { categories }): ProductCategoryState => {
     return {
       ...state,
-      categories: action.categories,
+      categories: categories,
       error: '',
     };
   }),
@@ -26,6 +26,18 @@ export const productReducer = createReducer<ProductCategoryState>(
       ...state,
       categories: [],
       error: action.error,
+    };
+  }),
+  on(ProductCategoryActions.deleteProductCategoriesSuccess, (state): ProductCategoryState => {
+    return {
+      ...state,
+      error: '',
+    };
+  }),
+  on(ProductCategoryActions.deleteProductCategoriesFailure, (state, { error }): ProductCategoryState => {
+    return {
+      ...state,
+      error: error,
     };
   })
 );

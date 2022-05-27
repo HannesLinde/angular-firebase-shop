@@ -9,3 +9,10 @@ export const loadProductCategoriesSuccess = createAction(
 );
 
 export const loadProductCategoriesFailure = createAction('[Product Category] Load Fail', props<{ error: string }>());
+
+export const deleteProductCategoriesSuccess = createAction('[Product Category API] Delete Success');
+
+export const deleteProductCategoriesFailure = createAction(
+  '[Product Category API] Delete Fail',
+  props<{ error: string }>()
+);

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { ProductCategory } from './models/product-category.model';
 import { ProductCategoryDialogComponent } from './product-category-dialog/product-category-dialog.component';
 import { ProductCategoryService } from './product-category.service';
-import { ProductCategoryActions } from './store/actions';
+import { ProductCategoryActions, ProductCategoryPageActions } from './store/actions';
 import { getProductCategories, State } from './store/selectors/product-category.selector';
 
 @Component({
@@ -75,7 +75,8 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   delete(category: ProductCategory) {
-    this.productCategoryService.delete(category.id);
+    this.store.dispatch(ProductCategoryPageActions.deleteProductCategories({ categoryId: category.id }));
+    //this.productCategoryService.delete(category.id);
   }
 
   update(category: ProductCategory) {
