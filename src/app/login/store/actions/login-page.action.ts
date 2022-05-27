@@ -13,4 +13,8 @@ export const signUp = createAction('[Login Page] Sign up', props<{ loginData: Lo
 
 export const logOut = createAction('[Login Page] Log out');
 
-export const updateState = createAction('[Login Page] update state', props<{ user: User | null }>());
+export const updateState = createAction('[Login Page] Update State', props<{ user: User | null }>());
+
+export const setLoading = createAction('[Login Page] Set Loading', props<{ isLoading: false }>());
+
+export const resetError = createAction('[Login Page] Set Loading');

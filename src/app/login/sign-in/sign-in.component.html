@@ -44,6 +44,9 @@
         <button mat-raised-button type="button" (click)="signInwithGoogle()" color="primary">
           Sign in with Google
         </button>
+        <br />
+        <br />
+        <mat-progress-bar *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
       </form>
     </mat-card-content>
   </mat-card>

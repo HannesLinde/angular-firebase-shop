@@ -7,3 +7,5 @@ const getUserFeatureState = createFeatureSelector<UserState>('users');
 export const getAuthentification = createSelector(getUserFeatureState, (state) => state.user);
 
 export const getError = createSelector(getUserFeatureState, (state) => state.error);
+
+export const getLoading = createSelector(getUserFeatureState, (state) => state.isLoading);
