@@ -26,6 +26,7 @@ import { AuthenticationService } from '@app/core/services/Auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginModule } from './login/login.module';
 import { ShellComponent } from './shell/shell.component';
+import { ProductsModule } from './products/products.module';
 
 //Pipes
 
@@ -42,6 +43,7 @@ import { ShellComponent } from './shell/shell.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     LayoutModule,
+    ProductsModule,
     LoginModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),

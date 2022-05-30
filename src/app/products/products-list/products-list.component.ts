@@ -81,6 +81,10 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.store.dispatch(displayMode({ displayMode: 'Grid' }));
   }
 
+  test(row: any) {
+    console.log(row);
+  }
+
   ngOnDestroy(): void {
     if (this.sub) {
       this.sub.unsubscribe();

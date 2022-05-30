@@ -1,3 +1,7 @@
 .full-width-table {
   width: 100%;
 }
+
+.effect:hover {
+  background-color: lightgray;
+}
