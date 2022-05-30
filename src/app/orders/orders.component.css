@@ -17,6 +17,13 @@ mat-card {
     margin-left: 2px;
   }
 
+  .hide-order-detail{
+    display: none;
+    visibility: hidden;
+}
+
+/*
+// could be needed if style in dialog need to be different
   @media screen and (max-width: 720px) {
     
     .order-detail{
@@ -24,3 +31,4 @@ mat-card {
       visibility: hidden;
     }
   }
+  */
