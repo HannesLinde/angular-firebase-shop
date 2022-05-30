@@ -27,6 +27,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginModule } from './login/login.module';
 import { ShellComponent } from './shell/shell.component';
 import { ProductsModule } from './products/products.module';
+import { AppEffect } from './store/effects/app.effect';
+import { appReducer } from './store/reducers/app.reducer';
 
 //Pipes
 
@@ -45,8 +47,8 @@ import { ProductsModule } from './products/products.module';
     LayoutModule,
     ProductsModule,
     LoginModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({ root: appReducer }),
+    EffectsModule.forRoot([AppEffect]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
