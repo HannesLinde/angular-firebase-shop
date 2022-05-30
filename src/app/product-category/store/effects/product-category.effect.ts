@@ -20,7 +20,7 @@ export class ProductCategoryEffect {
       ofType(ProductCategoryPageActions.loadProductCategories),
       mergeMap(() =>
         this.productCategoryService.getAll().pipe(
-          delay(1000),
+          delay(500), // this delay is insignificant, just to show the loading because data loading quickly
           map((categories) => ProductCategoryActions.loadProductCategoriesSuccess({ categories })),
           catchError((error) => of(ProductCategoryActions.loadProductCategoriesFailure({ error })))
         )

@@ -1,10 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { LoadingSpinnerComponent } from '@app/shared/loading-spinner/loading-spinner.component';
-import { SpinnerDialogComponent } from '@app/shared/spinner-dialog/spinner-dialog.component';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ProductCategory } from './models/product-category.model';
@@ -22,8 +20,6 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<ProductCategory>;
-  @ViewChild(LoadingSpinnerComponent)
-  private loadingSpinnerComponent!: LoadingSpinnerComponent;
 
   dataSource: MatTableDataSource<ProductCategory>;
   private subscriptions = new Subscription();
@@ -43,15 +39,6 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.subscriptions.add(
-      this.loading$.subscribe((isLoading) => {
-        if (isLoading) {
-          this.loadingSpinnerComponent.showLoading();
-        } else {
-          this.loadingSpinnerComponent.hideLoading();
-        }
-      })
-    );
   }
 
   ngOnInit(): void {
