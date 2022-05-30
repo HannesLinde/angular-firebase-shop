@@ -11,3 +11,5 @@ const getProductCategoryFeatureState = createFeatureSelector<ProductCategoryStat
 export const getProductCategories = createSelector(getProductCategoryFeatureState, (state) => state.categories);
 
 export const getError = createSelector(getProductCategoryFeatureState, (state) => state.error);
+
+export const getLoading = createSelector(getProductCategoryFeatureState, (state) => state.isLoading);

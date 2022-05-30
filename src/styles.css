@@ -15,3 +15,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow: h
     text-align: center;
     margin: 5px;
 }
+
+.transparent-spinner-background .mat-dialog-container {
+    box-shadow: none;
+    background: rgba(0, 0, 0, 0.0);
+}

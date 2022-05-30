@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { debounceTime, Observable, Subscription } from 'rxjs';
 
 import { ProductCategory } from '@app/product-category/models/product-category.model';
-import { ProductCategoryActions } from '@app/product-category/store/actions';
+import { ProductCategoryActions, ProductCategoryPageActions } from '@app/product-category/store/actions';
 import { getProductCategories, State } from '@app/product-category/store/selectors/product-category.selector';
 
 import {
@@ -54,7 +54,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     this.productCategories$ = this.productCategoryStore.select(getProductCategories);
     this.user$ = this.userStore.select(getAuthentification);
     // as they are in different store
-    this.productCategoryStore.dispatch(ProductCategoryActions.loadProductCategories());
+    this.productCategoryStore.dispatch(ProductCategoryPageActions.loadProductCategories());
 
     this.id = this.route.snapshot.params['id'];
 

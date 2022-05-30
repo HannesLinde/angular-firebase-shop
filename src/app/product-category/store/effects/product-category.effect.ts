@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProductCategoryService } from '@app/product-category/product-category.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductCategoryActions, ProductCategoryPageActions } from '../actions';
-import { mergeMap, map, catchError, of, from, withLatestFrom } from 'rxjs';
+import { mergeMap, map, catchError, of, from, withLatestFrom, delay } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ProductState } from '@app/products/store/reducers/products.reducer';
 import { getProducts } from '@app/products/store/selectors/products.selector';
@@ -17,9 +17,10 @@ export class ProductCategoryEffect {
 
   loadProductCategories$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ProductCategoryActions.loadProductCategories),
+      ofType(ProductCategoryPageActions.loadProductCategories),
       mergeMap(() =>
         this.productCategoryService.getAll().pipe(
+          delay(1000),
           map((categories) => ProductCategoryActions.loadProductCategoriesSuccess({ categories })),
           catchError((error) => of(ProductCategoryActions.loadProductCategoriesFailure({ error })))
         )

@@ -7,6 +7,8 @@ import { ImagesPreviewComponent } from './images-preview/images-preview.componen
 import { ImagesPreviewPipe } from './images-preview-pipe.pipe';
 import { FilesUploadComponent } from './files-upload/files-upload.component';
 import { ImageUrlPipe } from './image-url-pipe.pipe';
+import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { ImageUrlPipe } from './image-url-pipe.pipe';
     DeleteDialogComponent,
     FilterComponent,
     ImagesPreviewComponent,
+    SpinnerDialogComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [CommonModule, MaterialModule],
   exports: [
@@ -25,6 +29,7 @@ import { ImageUrlPipe } from './image-url-pipe.pipe';
     ImagesPreviewComponent,
     FilterComponent,
     MaterialModule,
+    LoadingSpinnerComponent,
   ],
 })
 export class SharedModule {}
