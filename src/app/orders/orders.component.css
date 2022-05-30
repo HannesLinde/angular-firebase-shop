@@ -8,7 +8,7 @@ mat-card {
   }
 
   .order-list{
-    flex-grow: 1;
+    flex-grow: 3;
     margin-right: 2px;
   }
 

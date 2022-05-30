@@ -12,8 +12,8 @@
       <ng-container *ngIf="user$ | async as user">
         <a mat-list-item *ngIf="user.admin" [routerLink]="['/product-category']">Categories</a>
       </ng-container>
-
       <a mat-list-item [routerLink]="['/products']">Products</a>
+      <a mat-list-item [routerLink]="['/orders']">Orders</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content style="height: 90%">

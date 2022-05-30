@@ -1,16 +1,10 @@
 <mat-card>
   <mat-card-content>
     <div class="order-container">
-      <app-order-list
-        class="order-list"
-        style="flex-grow: 1"
-        [orders$]="orders$"
-        (selectOrder)="onOrderSelected($event)"
-      ></app-order-list>
+      <app-order-list class="order-list" [orders$]="orders$" (selectOrder)="onOrderSelected($event)"></app-order-list>
       <app-order-detail
         [ngClass]="isHandSet ? 'hide-order-detail' : ''"
         class="order-detail"
-        style="flex-grow: 2"
         [order]="selectedOrder"
       ></app-order-detail>
     </div>

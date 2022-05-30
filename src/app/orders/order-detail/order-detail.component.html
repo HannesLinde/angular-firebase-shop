@@ -1,3 +1,9 @@
-<div *ngIf="order">
-  {{ order.date }}
+<div *ngIf="order" style="display: flex">
+  <div style="flex-grow: 1">
+    <img src="/assets/img/no-image.png" mat-card-sm-image />
+  </div>
+  <div style="flex-grow: 5; display: flex; flex-direction: column">
+    <div style="flex-grow: 1">{{ order.date }}</div>
+    <div style="flex-grow: 1">{{ order.date }}</div>
+  </div>
 </div>

@@ -1,3 +1,5 @@
+import { Product } from '@app/products/models/product.model';
+
 export type OrderStatus = 'NOT SUBMITTED' | 'SUBMITTED' | 'IN PREPERATION' | 'DELIVERED';
 
 export class Order {
@@ -22,4 +24,5 @@ export interface OrderDetail {
   productId: string;
   quantity: number;
   orderPrice: number;
+  product?: Product;
 }

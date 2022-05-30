@@ -5,9 +5,12 @@ import { AppState } from '@app/store/reducers/app.reducer';
 import { getHandSet } from '@app/store/selectors/app.selector';
 import { Store } from '@ngrx/store';
 import { Observable, of, Subscription, tap } from 'rxjs';
-import { Order } from './models/order.model';
+import { Order, OrderStatus } from './models/order.model';
 import { OrderDetailDialogComponent } from './order-detail-dialog/order-detail-dialog.component';
 import { OrdersService } from './orders.service';
+import { OrderPageActions } from './store/actions';
+import { OrderState } from './store/reducers/orders.reducer';
+import { getOrders } from './store/selectors/orders.selector';
 
 @Component({
   selector: 'app-orders',
@@ -20,10 +23,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
   selectedOrder!: Order;
   subscription = new Subscription();
 
-  constructor(private orderService: OrdersService, private dialog: MatDialog, private appStore: Store<AppState>) {}
+  constructor(private dialog: MatDialog, private appStore: Store<AppState>, private orderStore: Store<OrderState>) {}
 
   ngOnInit(): void {
-    this.orders$ = this.orderService.getAll();
+    this.orderStore.dispatch(OrderPageActions.loadAllOrders());
+    this.orders$ = this.orderStore.select(getOrders);
     this.subscription.add(this.appStore.select(getHandSet).subscribe((isHandSet) => (this.isHandSet = isHandSet)));
   }
 
