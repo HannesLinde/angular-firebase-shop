@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Observable, of } from 'rxjs';
+import { Order } from './models/order.model';
+import { OrderDetailDialogComponent } from './order-detail-dialog/order-detail-dialog.component';
 import { OrdersService } from './orders.service';
 
 @Component({
@@ -7,9 +12,19 @@ import { OrdersService } from './orders.service';
   styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit {
-  constructor(private orderService: OrdersService) {}
+  orders$!: Observable<Order[]>;
+  selectedOrder!: Order;
+  constructor(private orderService: OrdersService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.orderService.getAll().subscribe((data) => console.log(data));
+    this.orders$ = this.orderService.getAll();
+  }
+
+  onOrderSelected(order: Order) {
+    this.selectedOrder = order;
+    /*let dialogRef = this.dialog.open(OrderDetailDialogComponent, {
+      width: '450px',
+      data: order,
+    });*/
   }
 }

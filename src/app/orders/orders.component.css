@@ -1,0 +1,26 @@
+mat-card {    
+    max-width: 95%;    
+    margin: 2em auto;       
+  }  
+
+  .order-container{
+    display: flex;
+  }
+
+  .order-list{
+    flex-grow: 1;
+    margin-right: 2px;
+  }
+
+  .order-detail{
+    flex-grow: 2;
+    margin-left: 2px;
+  }
+
+  @media screen and (max-width: 720px) {
+    
+    .order-detail{
+      display: none;
+      visibility: hidden;
+    }
+  }

@@ -1,0 +1,11 @@
+.full-width-table {
+    width: 100%;
+  }
+
+.effect:hover {
+    background-color: #7986cb;
+  }
+
+.selected {
+    background-color: #c5cae9;
+  }

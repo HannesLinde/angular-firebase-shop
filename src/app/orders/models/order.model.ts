@@ -19,7 +19,7 @@ export class Order {
 }
 
 export interface OrderDetail {
-  productID: string;
-  quantite: number;
+  productId: string;
+  quantity: number;
   orderPrice: number;
 }

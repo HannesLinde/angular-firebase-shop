@@ -10,7 +10,7 @@ export interface OrderDto {
 }
 
 export interface orderDetailDto {
-  productID: string;
-  quantite: number;
+  productId: string;
+  quantity: number;
   orderPrice: number; // the price when order is submitted
 }
