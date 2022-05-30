@@ -13,7 +13,6 @@ import { getAuthentification, getError, getLoading } from '../store/selectors/lo
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
-  encapsulation: ViewEncapsulation.Emulated,
 })
 export class SignInComponent implements OnInit {
   logInFormGroup!: FormGroup;
