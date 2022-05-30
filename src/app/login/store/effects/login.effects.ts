@@ -30,6 +30,21 @@ export class LoginEffect {
     );
   });
 
+  signInWithProvider$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoginPageActions.signInWithProvider),
+      mergeMap((action) =>
+        from(this.signWithProvider(action.provider)).pipe(
+          map((user) => {
+            this.router.navigate(['']);
+            return LoginApiActions.signInSuccess({ user: user ? user : null });
+          }),
+          catchError((errorMessage) => of(LoginApiActions.signInError({ errorMessage })))
+        )
+      )
+    );
+  });
+
   signUp$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(LoginPageActions.signUp),
@@ -67,4 +82,9 @@ export class LoginEffect {
       )
     );
   });
+
+  // will be extended and checked if new provider available
+  private signWithProvider(provider: 'Google' | 'Facebook') {
+    return this.authenticationService.singWithGoogle();
+  }
 }

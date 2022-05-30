@@ -67,15 +67,15 @@ export class AuthenticationService {
       });
   }
 
-  singWithGoogle() {
+  async singWithGoogle() {
     const provider = new GoogleAuthProvider();
-    return this.oAuthLogin(provider);
+    return await this.oAuthLogin(provider);
   }
 
-  private oAuthLogin(provider: GoogleAuthProvider) {
-    return signInWithPopup(this.afAuth, provider).then((credential) => {
-      console.log(credential.user);
-      //this.updateUserData(credential.user)
+  private async oAuthLogin(provider: GoogleAuthProvider): Promise<User | undefined> {
+    const credential = await signInWithPopup(this.afAuth, provider);
+    return await new Promise(async (resolve, reject) => {
+      return resolve(credential ? this.toUser(credential.user, await credential.user.getIdToken()) : undefined);
     });
   }
 

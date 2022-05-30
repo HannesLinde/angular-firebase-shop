@@ -9,6 +9,11 @@ export interface LoginData {
 
 export const signIn = createAction('[Login Page] Sign in', props<{ loginData: LoginData }>());
 
+export const signInWithProvider = createAction(
+  '[Login Page] Sign in with provider',
+  props<{ provider: 'Google' | 'Facebook' }>()
+);
+
 export const signUp = createAction('[Login Page] Sign up', props<{ loginData: LoginData }>());
 
 export const logOut = createAction('[Login Page] Log out');

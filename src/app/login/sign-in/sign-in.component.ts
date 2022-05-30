@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '@app/core/services/user';
 import { MyErrorStateMatcher } from '@app/shared/error-matcher';
-import { State, Store } from '@ngrx/store';
-import { from, NEVER, Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { AuthenticationService } from '../../core/services/Auth.service';
 import { LoginPageActions } from '../store/actions';
 import { UserState } from '../store/reducers/login.reducer';
@@ -43,7 +42,7 @@ export class SignInComponent implements OnInit {
   }
 
   signInwithGoogle() {
-    this.auth.singWithGoogle();
+    this.userStore.dispatch(LoginPageActions.signInWithProvider({ provider: 'Google' }));
   }
 
   logOut() {
