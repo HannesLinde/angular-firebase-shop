@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { State } from '@app/product-category/store/selectors/product-category.selector';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { ProductsService } from './products.service';
-import { ProductActions, ProductPageActions } from './store/actions';
-import { changeDisplay } from './store/selectors/products.selector';
+import { Observable, Subscription } from 'rxjs';
+import { ProductPageActions } from './store/actions';
+import { changeDisplay, getLoading } from './store/selectors/products.selector';
 
 @Component({
   selector: 'app-products',
@@ -14,9 +13,11 @@ export class ProductsComponent implements OnInit {
   constructor(private store: Store<State>) {}
 
   displayMode$!: Observable<string>;
+  loading$!: Observable<boolean>;
 
   ngOnInit(): void {
-    this.store.dispatch(ProductActions.loadProducts());
+    this.loading$ = this.store.select(getLoading);
+    this.store.dispatch(ProductPageActions.loadProducts());
     this.displayMode$ = this.store.select(changeDisplay);
   }
 }

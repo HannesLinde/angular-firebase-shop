@@ -15,3 +15,5 @@ export const getProduct = createSelector(getProductFeatureState, (state) => stat
 export const getError = createSelector(getProductFeatureState, (state) => state.error);
 
 export const changeDisplay = createSelector(getProductFeatureState, (state) => state.displayMode);
+
+export const getLoading = createSelector(getProductFeatureState, (state) => state.isLoading);
