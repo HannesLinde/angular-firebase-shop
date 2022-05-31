@@ -1,10 +1,22 @@
 <ng-container *ngIf="user$ | async as user">
   <ng-container *ngIf="product$ | async as product">
-    <mat-toolbar *ngIf="product.ownerId === user.uid">
+    <mat-toolbar>
       <span class="filter-toolbar"></span>
-      <button mat-button mat-mini-fab [routerLink]="['/products/edit', product.id]" color="primary">
-        <mat-icon>edit</mat-icon>
-      </button>
+      <ng-container *ngIf="product.ownerId === user.uid; else addToShoppingCart">
+        <button mat-button mat-mini-fab [routerLink]="['/products/edit', product.id]" color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #addToShoppingCart>
+        <ng-container *ngIf="!user.admin">
+          <button *ngIf="product.type === 'CUSTOM'" mat-button (click)="contactProductOwner(product)" color="primary">
+            Contact user
+          </button>
+          <button *ngIf="product.type === 'ENTREPRISE'" mat-button (click)="addToCart(product)" color="primary">
+            Add To Cart
+          </button>
+        </ng-container>
+      </ng-template>
     </mat-toolbar>
   </ng-container>
 </ng-container>
@@ -32,7 +44,6 @@
           <br />
           <br />
           <h4>{{ product.category?.name }}</h4>
-          <!--div style="height: 1px; background-color: black"></div-->
           <h1>Description</h1>
           {{ product.description }}
         </div>

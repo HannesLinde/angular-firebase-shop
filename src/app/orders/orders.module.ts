@@ -9,11 +9,14 @@ import { StoreModule } from '@ngrx/store';
 import { orderReducer } from './store/reducers/orders.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { OrderEffect } from './store/effects/orders.effect';
+import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [OrdersRoutingModule.components, OrderDetailDialogComponent],
+  declarations: [OrdersRoutingModule.components, OrderDetailDialogComponent, AddToCartDialogComponent],
   imports: [
     OrdersRoutingModule,
+    ReactiveFormsModule,
     SharedModule,
     CommonModule,
     StoreModule.forFeature('orders', orderReducer),

@@ -4,7 +4,9 @@
   </button>
 
   <span style="flex: 1 1 auto"></span>
-
+  <button *ngIf="user$ | async" mat-button>
+    <mat-icon matBadge="0" matBadgeColor="warn">shopping_cart</mat-icon>
+  </button>
   <button mat-button [matMenuTriggerFor]="menu">
     <mat-icon>more_vert</mat-icon>
   </button>

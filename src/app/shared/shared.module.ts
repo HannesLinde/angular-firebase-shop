@@ -9,12 +9,14 @@ import { FilesUploadComponent } from './files-upload/files-upload.component';
 import { ImageUrlPipe } from './image-url-pipe.pipe';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { ProductTotalPipe } from './product-total-pipe.pipe';
 
 @NgModule({
   declarations: [
     FilesUploadComponent,
     ImagesPreviewPipe,
     ImageUrlPipe,
+    ProductTotalPipe,
     DeleteDialogComponent,
     FilterComponent,
     ImagesPreviewComponent,
@@ -26,6 +28,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     FilesUploadComponent,
     ImagesPreviewPipe,
     ImageUrlPipe,
+    ProductTotalPipe,
     ImagesPreviewComponent,
     FilterComponent,
     MaterialModule,

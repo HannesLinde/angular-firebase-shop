@@ -9,3 +9,5 @@ export interface State extends AppState {
 const getOrdersFeatures = createFeatureSelector<OrderState>('orders');
 
 export const getOrders = createSelector(getOrdersFeatures, (state) => state.orders);
+
+export const getShoppingCartOrder = createSelector(getOrdersFeatures, (state) => state.order);
