@@ -5,3 +5,7 @@
   float: right;
   margin: 10px;
 }
+
+.filter-toolbar{
+  flex:  1 1 auto;
+}

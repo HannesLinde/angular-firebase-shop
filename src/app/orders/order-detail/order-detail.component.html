@@ -1,0 +1,21 @@
+<div *ngIf="order">
+  <div *ngFor="let detail of order.details; let i = index">
+    <hr *ngIf="i > 0" class="divider" />
+    <div style="display: flex">
+      <div style="flex-grow: 1">
+        <img src="/assets/img/no-image.png" mat-card-sm-image />
+      </div>
+      <div style="flex-grow: 5; display: flex; flex-direction: column">
+        <div style="flex-grow: 1">{{ detail.productId }}</div>
+        <div style="flex-grow: 1; display: flex; flex-direction: row">
+          <div style="flex-grow: 1">
+            {{ detail.orderPrice }}
+          </div>
+          <div style="flex-grow: 1">
+            {{ detail.quantity }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

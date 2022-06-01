@@ -9,3 +9,7 @@ export interface State extends AppState {
 const getProductCategoryFeatureState = createFeatureSelector<ProductCategoryState>('productCategories');
 
 export const getProductCategories = createSelector(getProductCategoryFeatureState, (state) => state.categories);
+
+export const getError = createSelector(getProductCategoryFeatureState, (state) => state.error);
+
+export const getLoading = createSelector(getProductCategoryFeatureState, (state) => state.isLoading);

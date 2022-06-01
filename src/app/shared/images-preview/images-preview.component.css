@@ -1,0 +1,12 @@
+
+.remove-icon{
+
+  position: absolute;
+  right: 0%; 
+  cursor: pointer
+}
+
+.inner-container{
+  display: inherit; 
+  position: relative
+}

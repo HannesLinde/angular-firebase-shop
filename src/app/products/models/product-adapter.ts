@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Adapter } from '@app/core/adapter';
 import { ProductDto } from './product.dto';
-import { Product, ProductTypeEnum } from './product.model';
+import { Product } from './product.model';
 
 @Injectable()
 export class ProductAdapter implements Adapter<Product, ProductDto> {
@@ -11,12 +11,13 @@ export class ProductAdapter implements Adapter<Product, ProductDto> {
       data.name,
       data.price,
       data.category.path.split('/')[1],
-      data.type as unknown as ProductTypeEnum,
-      data.description,
-      undefined
+      data.type,
+      data.images,
+      data.ownerId,
+      data.description
     );
   }
   toDto(data: Product): ProductDto {
-    throw new Error('Method not implemented.');
+    return { ...data, category: 'category/' + data.category?.id };
   }
 }

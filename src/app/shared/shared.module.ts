@@ -1,13 +1,38 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MaterialModule} from "./material.module";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from './material.module';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import { FilterComponent } from './filter/filter.component';
+import { ImagesPreviewComponent } from './images-preview/images-preview.component';
+import { ImagesPreviewPipe } from './images-preview-pipe.pipe';
+import { FilesUploadComponent } from './files-upload/files-upload.component';
+import { ImageUrlPipe } from './image-url-pipe.pipe';
+import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { ProductTotalPipe } from './product-total-pipe.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    FilesUploadComponent,
+    ImagesPreviewPipe,
+    ImageUrlPipe,
+    ProductTotalPipe,
+    DeleteDialogComponent,
+    FilterComponent,
+    ImagesPreviewComponent,
+    SpinnerDialogComponent,
+    LoadingSpinnerComponent,
+  ],
   imports: [CommonModule, MaterialModule],
   exports: [
-    MaterialModule
-  ]
+    FilesUploadComponent,
+    ImagesPreviewPipe,
+    ImageUrlPipe,
+    ProductTotalPipe,
+    ImagesPreviewComponent,
+    FilterComponent,
+    MaterialModule,
+    LoadingSpinnerComponent,
+  ],
 })
-export class SharedModule {
-}
+export class SharedModule {}

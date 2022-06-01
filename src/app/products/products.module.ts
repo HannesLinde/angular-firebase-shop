@@ -9,9 +9,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffect } from './store/effects/products.effect';
 import { productReducer } from './store/reducers/products.reducer';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProductStorage } from './products-files-storage.service';
+import { ProductsDetailComponent } from './products-detail/products-detail.component';
 
 @NgModule({
-  declarations: [ProductsRoutingModule.components],
+  declarations: [ProductsRoutingModule.components, ProductsDetailComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -19,7 +22,8 @@ import { productReducer } from './store/reducers/products.reducer';
     ProductCategoryModule,
     StoreModule.forFeature('products', productReducer),
     EffectsModule.forFeature([ProductEffect]),
+    ReactiveFormsModule,
   ],
-  providers: [ProductsService, ProductAdapter],
+  providers: [ProductsService, ProductAdapter, ProductStorage],
 })
 export class ProductsModule {}

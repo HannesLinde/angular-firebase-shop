@@ -1,12 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductsService } from './products.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { State } from '@app/product-category/store/selectors/product-category.selector';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { ProductPageActions } from './store/actions';
+import { changeDisplay, getLoading } from './store/selectors/products.selector';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
 })
 export class ProductsComponent implements OnInit {
-  constructor() {}
+  constructor(private store: Store<State>) {}
 
-  ngOnInit(): void {}
+  displayMode$!: Observable<string>;
+  loading$!: Observable<boolean>;
+
+  ngOnInit(): void {
+    this.loading$ = this.store.select(getLoading);
+    this.store.dispatch(ProductPageActions.loadProducts());
+    this.displayMode$ = this.store.select(changeDisplay);
+  }
 }

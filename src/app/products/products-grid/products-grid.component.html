@@ -1,1 +1,24 @@
-<p>products-grid works!</p>
+<mat-toolbar>
+  <span class="filter-toolbar"></span>
+  <div *ngIf="user$ | async as user">
+    <button *ngIf="user.admin" mat-icon-button focusable="false" (click)="onChangeDisplay()">
+      <mat-icon>view_module</mat-icon>
+    </button>
+    <button mat-button mat-mini-fab routerLink="add" color="primary">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<div class="container">
+  <mat-card
+    class="card-container"
+    *ngFor="let product of productWithCategories$ | async"
+    [routerLink]="['view', product.id]"
+  >
+    <img
+      mat-card-lg-image
+      [src]="product.mainImage | imageUrlPipe: 'images/products/':'/assets/img/no-image.png':product.id"
+    />
+    <mat-card-content> {{ product.name }} ({{ product.price | currency: 'EUR':'symbol' }}) </mat-card-content>
+  </mat-card>
+</div>

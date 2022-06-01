@@ -1,6 +1,6 @@
+<app-main-toolbar (toggleSideNave)="toggel()"></app-main-toolbar>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
-    #drawer
     class="sidenav"
     fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -9,23 +9,14 @@
   >
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/product-category']">Categories</a>
-      <a mat-list-item [routerLink]="['/products']">Product</a>
-      <a mat-list-item [routerLink]="['/login']">Login</a>
+      <ng-container *ngIf="user$ | async as user">
+        <a mat-list-item *ngIf="user.admin" [routerLink]="['/product-category']">Categories</a>
+        <a mat-list-item [routerLink]="['/orders']">Orders</a>
+      </ng-container>
+      <a mat-list-item [routerLink]="['/products']">Products</a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
-      >
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-    </mat-toolbar>
+  <mat-sidenav-content style="height: 90%">
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>

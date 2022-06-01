@@ -1,4 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow: hidden;}
+
+.error-message{
+    padding: 5px;
+    display: inline-block;
+    color: white;
+    background: #ff4081;
+    border-radius: 5px;
+}
+
+.error-block{
+    text-align: center;
+    margin: 5px;
+}
+
+.transparent-spinner-background .mat-dialog-container {
+    box-shadow: none;
+    background: rgba(0, 0, 0, 0.0);
+}

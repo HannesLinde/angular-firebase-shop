@@ -1,0 +1,11 @@
+<img mat-card-lg-image [src]="selectedImage | imagesPreviewPipe: previews:'/assets/img/no-image.png'" />
+<label for="fileInput" class="file-upload-label">
+  <a mat-flat-button color="primary">Upload Image</a>
+  <input style="display: none" id="fileInput" type="file" (change)="filesChanged($event)" multiple accept="image/*" />
+</label>
+<app-images-preview
+  class="image-preview"
+  (select)="selectImage($event)"
+  (delete)="deleteImage($event)"
+  [previews]="previews"
+></app-images-preview>

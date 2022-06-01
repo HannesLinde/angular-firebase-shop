@@ -1,4 +1,18 @@
-.center {
+:host ::ng-deep .center {
   display: flex;
   justify-content: center;
+}
+
+:host ::ng-deep mat-card {
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+:host ::ng-deep .signin-content {
+  padding: 60px 1rem;
+}
+
+:host ::ng-deep .full-width-input {
+  width: 100%;
 }

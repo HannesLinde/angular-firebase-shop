@@ -1,0 +1,57 @@
+<div class="signin-content">
+  <mat-card *ngIf="!(user$ | async)">
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-subtitle
+      >No account yet?
+      <a routerLink="sign-up">Signup</a>
+      !</mat-card-subtitle
+    >
+    <mat-card-content>
+      <div *ngIf="errorMessage$ | async as errorMessage" class="error-block">
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      </div>
+      <form [formGroup]="logInFormGroup" (ngSubmit)="submitLoginData()" data-test="login-form">
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              [errorStateMatcher]="matcher"
+              type="email"
+              data-test="login-email"
+            />
+            <mat-hint>abc@efg.xy</mat-hint>
+            <mat-error *ngIf="logInFormGroup.hasError('email') && !logInFormGroup.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="logInFormGroup.hasError('required')"> Email is <strong>required</strong> </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="full-width-input">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" data-test="login-password" />
+          </mat-form-field>
+        </div>
+        <button mat-raised-button type="submit" [disabled]="logInFormGroup.invalid" color="primary">Login</button>
+        <br />
+        <br />
+        <mat-divider></mat-divider>
+        <br />
+        <button mat-raised-button type="button" (click)="signInwithGoogle()" color="primary">
+          Sign in with Google
+        </button>
+        <br />
+        <br />
+        <mat-progress-bar *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="user$ | async as userData">
+    <button mat-stroked-button type="button" [disabled]="!userData" (click)="logOut()">Logout</button>
+  </mat-card>
+</div>

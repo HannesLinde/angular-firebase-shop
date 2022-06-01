@@ -1,0 +1,8 @@
+<mat-toolbar>
+  <mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input />
+  </mat-form-field>
+  <span class="filter-toolbar"></span>
+  <ng-content></ng-content>
+</mat-toolbar>

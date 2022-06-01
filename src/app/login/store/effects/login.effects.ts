@@ -1,0 +1,90 @@
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { LoginApiActions, LoginPageActions } from '../actions';
+import { mergeMap, map, catchError, of, from, tap } from 'rxjs';
+import { AuthenticationService } from '@app/core/services/Auth.service';
+import { Router } from '@angular/router';
+import { UserSerivce } from '@app/login/user.service';
+import { deleteItem, saveItem } from '@app/core/helpers/Storage';
+
+@Injectable()
+export class LoginEffect {
+  constructor(
+    private actions$: Actions,
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {}
+
+  signIn$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoginPageActions.signIn),
+      mergeMap((action) =>
+        from(this.authenticationService.SignIn(action.loginData.email, action.loginData.password)).pipe(
+          map((user) => {
+            this.router.navigate(['']);
+            return LoginApiActions.signInSuccess({ user: user ? user : null });
+          }),
+          catchError((errorMessage) => of(LoginApiActions.signInError({ errorMessage })))
+        )
+      )
+    );
+  });
+
+  signInWithProvider$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoginPageActions.signInWithProvider),
+      mergeMap((action) =>
+        from(this.signWithProvider(action.provider)).pipe(
+          map((user) => {
+            this.router.navigate(['']);
+            return LoginApiActions.signInSuccess({ user: user ? user : null });
+          }),
+          catchError((errorMessage) => of(LoginApiActions.signInError({ errorMessage })))
+        )
+      )
+    );
+  });
+
+  signUp$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoginPageActions.signUp),
+      mergeMap((action) =>
+        from(
+          this.authenticationService.SignUp(
+            action.loginData.email,
+            action.loginData.password,
+            action.loginData.displayName
+          )
+        ).pipe(
+          map((user) => {
+            this.router.navigate(['']);
+            saveItem('user', user);
+            return LoginApiActions.signUpSuccess({ user: user ? user : null });
+          }),
+          catchError((errorMessage) => of(LoginApiActions.signUpError({ errorMessage })))
+        )
+      )
+    );
+  });
+
+  logOut$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoginPageActions.logOut),
+      mergeMap(() =>
+        from(this.authenticationService.SignOut()).pipe(
+          map(() => {
+            deleteItem('user');
+            this.router.navigateByUrl('/');
+            return LoginApiActions.logOutSuccess();
+          }),
+          catchError((errorMessage) => of(LoginApiActions.logOutError({ errorMessage })))
+        )
+      )
+    );
+  });
+
+  // will be extended and checked if new provider available
+  private signWithProvider(provider: 'Google' | 'Facebook') {
+    return this.authenticationService.singWithGoogle();
+  }
+}

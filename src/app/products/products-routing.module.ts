@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '@app/login/auth.guard';
+import { ProductResolverService } from './product-resolver.resolve';
+import { ProductsDetailComponent } from './products-detail/products-detail.component';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { ProductsGridComponent } from './products-grid/products-grid.component';
 import { ProductsListComponent } from './products-list/products-list.component';
@@ -10,11 +13,18 @@ const routes: Routes = [
   {
     path: '',
     component: ProductsComponent,
-    children: [
-      { path: '', component: ProductsListComponent },
-      { path: 'add', component: ProductsEditComponent },
-      { path: 'edit/:id', component: ProductsEditComponent },
-    ],
+  },
+  { path: 'add', component: ProductsEditComponent, canActivate: [AuthGuard] },
+  {
+    path: 'edit/:id',
+    component: ProductsEditComponent,
+    canActivate: [AuthGuard],
+    resolve: { entity: ProductResolverService },
+  },
+  {
+    path: 'view/:id',
+    component: ProductsDetailComponent,
+    resolve: { entity: ProductResolverService },
   },
 ];
 
@@ -24,5 +34,11 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class ProductsRoutingModule {
-  static components = [ProductsComponent, ProductsListComponent, ProductsEditComponent, ProductsGridComponent];
+  static components = [
+    ProductsComponent,
+    ProductsListComponent,
+    ProductsEditComponent,
+    ProductsDetailComponent,
+    ProductsGridComponent,
+  ];
 }
