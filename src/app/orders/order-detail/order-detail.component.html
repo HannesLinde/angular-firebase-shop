@@ -1,12 +1,11 @@
+<mat-toolbar *ngIf="allowUpdate">
+  <span style="flex: 1 1 auto"></span>
+  <button [disabled]="!order || order.details.length === 0" mat-button color="primary" (click)="clearShoppingCart()">
+    Clear
+  </button>
+  <button [disabled]="!order || order.details.length === 0" mat-button color="primary" (click)="save()">Save</button>
+</mat-toolbar>
 <div *ngIf="order">
-  <mat-toolbar *ngIf="allowUpdate">
-    <span style="flex: 1 1 auto"></span>
-    <button [disabled]="order.details.length === 0" mat-button color="primary" (click)="clearShoppingCart()">
-      Clear
-    </button>
-    <button [disabled]="order.details.length === 0" mat-button color="primary" (click)="save()">Save</button>
-  </mat-toolbar>
-
   <div *ngFor="let detail of allowUpdate ? details : order.details; let i = index">
     <hr *ngIf="i > 0" class="divider" />
     <table style="width: 100%">

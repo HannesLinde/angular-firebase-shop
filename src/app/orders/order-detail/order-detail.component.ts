@@ -7,7 +7,7 @@ import { Order, OrderDetail } from '../models/order.model';
   styleUrls: ['./order-detail.component.css'],
 })
 export class OrderDetailComponent implements OnInit {
-  @Input() order!: Order;
+  @Input() order?: Order;
   details: OrderDetail[] = [];
   @Input() allowUpdate: boolean = false;
   @Output() saveOrder = new EventEmitter<Order>();
@@ -23,8 +23,10 @@ export class OrderDetailComponent implements OnInit {
   }
 
   save() {
-    this.order = { ...this.order, details: this.details };
-    this.saveOrder.emit(this.order);
+    if (this.order) {
+      this.order = { ...this.order, details: this.details };
+      this.saveOrder.emit(this.order);
+    }
   }
 
   clearShoppingCart() {
