@@ -50,7 +50,14 @@ export class OrderEffect {
               catchError((error) => of(OrderApiActions.addProductToCartFailure({ error })))
             );
           } else {
-            const newOrder = new Order('', 50, new Date(), 'NOT SUBMITTED', [], user.uid);
+            const newOrder = new Order(
+              '',
+              detail.orderPrice * detail.quantity,
+              new Date(),
+              'NOT SUBMITTED',
+              [detail],
+              user.uid
+            );
             return from(this.orderService.add(newOrder)).pipe(
               map((id) => OrderApiActions.addProductToCartSuccess({ order: newOrder })),
               catchError((error) => of(OrderApiActions.addProductToCartFailure({ error })))

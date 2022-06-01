@@ -8,7 +8,7 @@
 <div *ngIf="order">
   <div *ngFor="let detail of allowUpdate ? details : order.details; let i = index">
     <hr *ngIf="i > 0" class="divider" />
-    <table style="width: 100%">
+    <table style="width: 100%; margin-top: 5px">
       <thead>
         <tr>
           <td rowspan="3" style="width: 20%" *ngIf="allowUpdate" class="remove-detail">
@@ -34,5 +34,8 @@
         </tr>
       </thead>
     </table>
+  </div>
+  <div *ngIf="allowUpdate" class="order-total">
+    <div>Total : {{ order.total | orderTotalPipe: details }}</div>
   </div>
 </div>

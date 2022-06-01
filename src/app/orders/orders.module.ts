@@ -12,8 +12,9 @@ import { OrderEffect } from './store/effects/orders.effect';
 import { AddToCartDialogComponent } from './add-to-cart-dialog/add-to-cart-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { orderTotalPipe } from './order-total.pipe';
 @NgModule({
-  declarations: [OrdersRoutingModule.components, OrderDetailDialogComponent, AddToCartDialogComponent],
+  declarations: [OrdersRoutingModule.components, OrderDetailDialogComponent, AddToCartDialogComponent, orderTotalPipe],
   imports: [
     OrdersRoutingModule,
     FormsModule,

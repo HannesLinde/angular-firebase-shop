@@ -11,3 +11,9 @@ hr.divider {
     display: inherit; 
     position: relative;
   }
+
+
+  .order-total{
+    display: flex;
+    flex-direction: row-reverse;
+  }
