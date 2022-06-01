@@ -41,6 +41,7 @@ export class AddToCartDialogComponent implements OnInit {
           },
         })
       );
+
     this.dialogRef.close();
   }
 

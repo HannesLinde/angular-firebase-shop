@@ -29,6 +29,7 @@ import { ShellComponent } from './shell/shell.component';
 import { ProductsModule } from './products/products.module';
 import { AppEffect } from './store/effects/app.effect';
 import { appReducer } from './store/reducers/app.reducer';
+import { OrdersModule } from './orders/orders.module';
 
 //Pipes
 
@@ -46,6 +47,7 @@ import { appReducer } from './store/reducers/app.reducer';
     ReactiveFormsModule,
     LayoutModule,
     ProductsModule,
+    OrdersModule,
     LoginModule,
     StoreModule.forRoot({ root: appReducer }),
     EffectsModule.forRoot([AppEffect]),

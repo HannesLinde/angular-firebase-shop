@@ -4,9 +4,8 @@
     <input matInput type="number" formControlName="quantity" required />
   </mat-form-field>
   {{ product.price | productTotalPipe: detailForm.value.quantity | currency: 'EUR':'symbol' }}
+  <div mat-dialog-actions align="end">
+    <button mat-button type="submit">Add</button>
+    <button mat-button type="button" (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+  </div>
 </form>
-
-<div mat-dialog-actions align="end">
-  <button mat-button type="submit">Add</button>
-  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
-</div>

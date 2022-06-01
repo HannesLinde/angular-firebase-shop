@@ -4,13 +4,13 @@ import { OrderApiActions } from '../actions';
 
 export interface OrderState {
   orders: Order[];
-  order: Order | null;
+  order: Order | undefined;
   error: string;
 }
 
 const initialState: OrderState = {
   orders: [],
-  order: null,
+  order: undefined,
   error: '',
 };
 
@@ -37,6 +37,32 @@ export const orderReducer = createReducer<OrderState>(
     };
   }),
   on(OrderApiActions.addProductToCartFailure, (state, { error }): OrderState => {
+    return {
+      ...state,
+      error,
+    };
+  }),
+  on(OrderApiActions.loadShoppingCartSuccess, (state, { order }): OrderState => {
+    return {
+      ...state,
+      order: order ? { ...order } : undefined,
+      error: '',
+    };
+  }),
+  on(OrderApiActions.loadShoppingCartFailure, (state, { error }): OrderState => {
+    return {
+      ...state,
+      error,
+    };
+  }),
+  on(OrderApiActions.updateShoppingCartSuccess, (state, { order }): OrderState => {
+    return {
+      ...state,
+      order: { ...order },
+      error: '',
+    };
+  }),
+  on(OrderApiActions.updateShoppingCartFailure, (state, { error }): OrderState => {
     return {
       ...state,
       error,

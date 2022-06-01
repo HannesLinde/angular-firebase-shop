@@ -1,4 +1,13 @@
 hr.divider {
     border-top: 3px solid #bbb;
   }
+
+  .remove-detail{
+    text-align: center;
+    cursor: pointer;
+  }
   
+  .inner-container{
+    display: inherit; 
+    position: relative;
+  }

@@ -1,0 +1,7 @@
+<div *ngIf="shoppingOrder$ | async as shoppingOrder">
+  <mat-card>
+    <mat-card-content>
+      <app-order-detail [order]="shoppingOrder" [allowUpdate]="true" (saveOrder)="onSave($event)"></app-order-detail>
+    </mat-card-content>
+  </mat-card>
+</div>
