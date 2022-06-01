@@ -3,24 +3,18 @@ mat-card {
     margin: 2em auto;       
   }  
 
-  .order-container{
-    display: flex;
-  }
-
-  .order-list{
-    flex-grow: 3;
-    margin-right: 2px;
-  }
-
-  .order-detail{
-    flex-grow: 2;
-    margin-left: 2px;
-  }
-
   .hide-order-detail{
     display: none;
     visibility: hidden;
-}
+  }
+
+  .fixed-list-width{
+    width: 500px;
+  } 
+
+  .max-list-width{
+    width: 100%;
+  }
 
 /*
 // could be needed if style in dialog need to be different

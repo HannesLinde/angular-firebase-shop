@@ -8,25 +8,28 @@
   </mat-toolbar>
 
   <div *ngFor="let detail of allowUpdate ? details : order.details; let i = index">
+    <hr *ngIf="i > 0" class="divider" />
     <table style="width: 100%">
       <thead>
         <tr>
-          <td rowspan="2" *ngIf="allowUpdate" class="remove-detail">
+          <td rowspan="3" style="width: 20%" *ngIf="allowUpdate" class="remove-detail">
             <a (click)="remove(detail)">
               <mat-icon color="warn">remove_circle</mat-icon>
             </a>
           </td>
-          <td rowspan="2"><img src="/assets/img/no-image.png" mat-card-sm-image /></td>
-          <td style="width: 65%" colspan="3">{{ detail.productId }}</td>
+          <td rowspan="3" style="width: 20%"><img src="/assets/img/no-image.png" mat-card-sm-image /></td>
+          <td style="width: 60%" colspan="3">{{ detail.productId }}</td>
         </tr>
         <tr>
-          <td style="width: 20%">{{ detail.orderPrice | currency: 'EUR':'symbol' }}</td>
+          <td style="width: 30%">{{ detail.orderPrice | currency: 'EUR':'symbol' }}</td>
           <td style="width: 20%">
             <mat-form-field style="width: 40px">
               <input matInput type="number" [(ngModel)]="detail.quantity" [readonly]="!allowUpdate" />
             </mat-form-field>
           </td>
-          <td style="width: 20%">
+        </tr>
+        <tr>
+          <td>
             {{ detail.orderPrice | productTotalPipe: detail.quantity | currency: 'EUR':'symbol' }}
           </td>
         </tr>
