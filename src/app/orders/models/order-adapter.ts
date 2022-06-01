@@ -9,6 +9,7 @@ export class OrderAdapter implements Adapter<Order, OrderDto> {
     return Object.assign({}, data) as Order;
   }
   toDto(data: Order): OrderDto {
-    return { ...data };
+    const { id, ...order } = { ...data };
+    return order as OrderDto;
   }
 }
