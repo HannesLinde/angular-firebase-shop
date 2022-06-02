@@ -59,7 +59,10 @@ export class OrderEffect {
               user.uid
             );
             return from(this.orderService.add(newOrder)).pipe(
-              map((id) => OrderApiActions.addProductToCartSuccess({ order: newOrder })),
+              map((id) => {
+                newOrder.id = id;
+                return OrderApiActions.addProductToCartSuccess({ order: newOrder });
+              }),
               catchError((error) => of(OrderApiActions.addProductToCartFailure({ error })))
             );
           }

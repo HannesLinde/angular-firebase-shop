@@ -20,6 +20,6 @@ export const logOut = createAction('[Login Page] Log out');
 
 export const updateState = createAction('[Login Page] Update State', props<{ user: User | null }>());
 
-export const setLoading = createAction('[Login Page] Set Loading', props<{ isLoading: false }>());
+export const setLoading = createAction('[Login Page] Set Loading', props<{ isLoading: boolean }>());
 
 export const resetError = createAction('[Login Page] Set Loading');

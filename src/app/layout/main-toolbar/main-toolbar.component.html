@@ -5,20 +5,21 @@
 
   <span style="flex: 1 1 auto"></span>
   <!-- Add component to retrieve this -->
-  <ng-container *ngIf="user$ | async">
-    <button mat-button [routerLink]="['/orders/shopping']">
-      <mat-icon
-        *ngIf="shoppingOrder$ | async as shoppingOrder; else emptyShoppingCart"
-        [matBadge]="shoppingOrder.details.length"
-        matBadgeColor="warn"
-        >shopping_cart</mat-icon
-      >
-      <ng-template #emptyShoppingCart>
-        <mat-icon matBadge="0" matBadgeColor="warn">shopping_cart</mat-icon>
-      </ng-template>
-    </button>
+  <ng-container *ngIf="user$ | async as user">
+    <ng-container *ngIf="!user.admin">
+      <button mat-button [routerLink]="['/orders/shopping']">
+        <mat-icon
+          *ngIf="shoppingOrder$ | async as shoppingOrder; else emptyShoppingCart"
+          [matBadge]="shoppingOrder.details.length"
+          matBadgeColor="warn"
+          >shopping_cart</mat-icon
+        >
+        <ng-template #emptyShoppingCart>
+          <mat-icon matBadge="0" matBadgeColor="warn">shopping_cart</mat-icon>
+        </ng-template>
+      </button>
+    </ng-container>
   </ng-container>
-
   <button mat-button [matMenuTriggerFor]="menu">
     <mat-icon>more_vert</mat-icon>
   </button>

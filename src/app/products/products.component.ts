@@ -17,7 +17,6 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading$ = this.store.select(getLoading);
-    this.store.dispatch(ProductPageActions.loadProducts());
     this.displayMode$ = this.store.select(changeDisplay);
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { User } from '@app/core/services/user';
 import { select, Store } from '@ngrx/store';
-import { map, Observable } from 'rxjs';
+import { map, Observable, debounceTime } from 'rxjs';
 import { UserState } from './store/reducers/login.reducer';
 import { getAuthentification } from './store/selectors/login.selector';
 
@@ -17,6 +17,7 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.userStore.pipe(
+      debounceTime(500),
       select(getAuthentification),
       map((user: User | null) => {
         if (user && user.admin) {

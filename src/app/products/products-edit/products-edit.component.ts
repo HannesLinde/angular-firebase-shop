@@ -54,7 +54,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     this.productCategories$ = this.productCategoryStore.select(getProductCategories);
     this.user$ = this.userStore.select(getAuthentification);
     // as they are in different store
-    this.productCategoryStore.dispatch(ProductCategoryPageActions.loadProductCategories());
+    //this.productCategoryStore.dispatch(ProductCategoryPageActions.loadProductCategories());
 
     this.id = this.route.snapshot.params['id'];
 

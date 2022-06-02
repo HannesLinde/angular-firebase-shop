@@ -44,7 +44,6 @@ export class ProductCategoryComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnInit(): void {
     this.loading$ = this.store.select(getLoading);
     this.errorMessage$ = this.store.select(getError);
-    this.store.dispatch(ProductCategoryPageActions.loadProductCategories());
     this.subscriptions.add(
       this.store.select(getProductCategories).subscribe((data: ProductCategory[]) => {
         this.dataSource.data = data;

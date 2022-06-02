@@ -16,13 +16,13 @@ export const initialState: ProductCategoryState = {
 
 export const productReducer = createReducer<ProductCategoryState>(
   initialState,
-  on(ProductCategoryPageActions.loadProductCategories, (state): ProductCategoryState => {
+  /*on(ProductCategoryPageActions.loadProductCategories, (state): ProductCategoryState => {
     return {
       ...state,
       error: '',
       isLoading: true,
     };
-  }),
+  }),*/
   on(ProductCategoryActions.loadProductCategoriesSuccess, (state, { categories }): ProductCategoryState => {
     return {
       ...state,

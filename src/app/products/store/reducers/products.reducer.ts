@@ -20,13 +20,6 @@ export const initialState: ProductState = {
 
 export const productReducer = createReducer<ProductState>(
   initialState,
-  on(ProductPageActions.loadProducts, (state): ProductState => {
-    return {
-      ...state,
-      error: '',
-      isLoading: true,
-    };
-  }),
   on(ProductActions.loadProductsSuccess, (state, action): ProductState => {
     return {
       ...state,
@@ -63,6 +56,12 @@ export const productReducer = createReducer<ProductState>(
     return {
       ...state,
       displayMode: action.displayMode,
+    };
+  }),
+  on(ProductPageActions.setLoading, (state, { isLoading }) => {
+    return {
+      ...state,
+      isLoading,
     };
   })
 );

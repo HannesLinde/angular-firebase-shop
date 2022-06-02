@@ -5,6 +5,6 @@ export const deleteProductCategories = createAction(
   props<{ categoryId: string }>()
 );
 
-export const loadProductCategories = createAction('[Product Category] Load');
+//export const loadProductCategories = createAction('[Product Category] Load');
 
 export const setLoading = createAction('[Product Category Page] Set Loading', props<{ isLoading: false }>());

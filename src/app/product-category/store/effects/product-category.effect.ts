@@ -16,15 +16,10 @@ export class ProductCategoryEffect {
   ) {}
 
   loadProductCategories$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(ProductCategoryPageActions.loadProductCategories),
-      mergeMap(() =>
-        this.productCategoryService.getAll().pipe(
-          delay(500), // this delay is insignificant, just to show the loading because data loading quickly
-          map((categories) => ProductCategoryActions.loadProductCategoriesSuccess({ categories })),
-          catchError((error) => of(ProductCategoryActions.loadProductCategoriesFailure({ error })))
-        )
-      )
+    return this.productCategoryService.getAll().pipe(
+      delay(500), // this delay is insignificant, just to show the loading because data loading quickly
+      map((categories) => ProductCategoryActions.loadProductCategoriesSuccess({ categories })),
+      catchError((error) => of(ProductCategoryActions.loadProductCategoriesFailure({ error })))
     );
   });
 
