@@ -3,7 +3,7 @@ import { OrderStatus } from './order.model';
 export interface OrderDto {
   id: string;
   total: number;
-  date: Date;
+  date: any; // firebase date format
   status: OrderStatus;
   details: orderDetailDto[];
   ownerId: string;

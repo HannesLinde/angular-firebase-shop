@@ -4,6 +4,9 @@
     Clear
   </button>
   <button [disabled]="!order || order.details.length === 0" mat-button color="primary" (click)="save()">Save</button>
+  <button [disabled]="!order || order.details.length === 0" mat-button color="primary" (click)="submit()">
+    Submit Order
+  </button>
 </mat-toolbar>
 <div *ngIf="order">
   <div *ngFor="let detail of allowUpdate ? details : order.details; let i = index">
@@ -23,7 +26,7 @@
           <td style="width: 30%">{{ detail.orderPrice | currency: 'EUR':'symbol' }}</td>
           <td style="width: 20%">
             <mat-form-field style="width: 40px">
-              <input matInput type="number" [(ngModel)]="detail.quantity" [readonly]="!allowUpdate" />
+              <input matInput type="number" [(ngModel)]="detail.quantity" [readonly]="!allowUpdate" min="1" />
             </mat-form-field>
           </td>
         </tr>
@@ -36,6 +39,6 @@
     </table>
   </div>
   <div *ngIf="allowUpdate" class="order-total">
-    <div>Total : {{ order.total | orderTotalPipe: details }}</div>
+    <div>Total : {{ order.total | orderTotalPipe: details | currency: 'EUR':'symbol' }}</div>
   </div>
 </div>

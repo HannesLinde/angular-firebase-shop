@@ -58,7 +58,7 @@ export const orderReducer = createReducer<OrderState>(
   on(OrderApiActions.updateShoppingCartSuccess, (state, { order }): OrderState => {
     return {
       ...state,
-      order: { ...order },
+      order: order ? { ...order } : undefined,
       error: '',
     };
   }),

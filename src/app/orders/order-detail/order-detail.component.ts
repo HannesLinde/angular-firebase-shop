@@ -8,14 +8,15 @@ import { Order, OrderDetail } from '../models/order.model';
 })
 export class OrderDetailComponent implements OnInit {
   @Input() order!: Order;
-  details: OrderDetail[] = [];
   @Input() allowUpdate: boolean = false;
   @Output() saveOrder = new EventEmitter<Order>();
-  n: number = 1;
+
+  details: OrderDetail[] = [];
+
   constructor() {}
 
   ngOnInit(): void {
-    this.details = this.order ? this.order.details.map((detail) => ({ ...detail })) : [];
+    this.createDetailsCopy();
   }
 
   remove(detail: OrderDetail) {
@@ -25,9 +26,21 @@ export class OrderDetailComponent implements OnInit {
   save() {
     this.order = { ...this.order, details: this.details };
     this.saveOrder.emit(this.order);
+    this.createDetailsCopy();
+  }
+
+  submit() {
+    this.order = { ...this.order, details: this.details, status: 'SUBMITTED' };
+    this.saveOrder.emit(this.order);
+    this.createDetailsCopy();
   }
 
   clearShoppingCart() {
     this.details = [];
+  }
+
+  // to avoid readOnly issue as order/detail in store
+  private createDetailsCopy() {
+    this.details = this.order ? this.order.details.map((detail) => ({ ...detail })) : [];
   }
 }

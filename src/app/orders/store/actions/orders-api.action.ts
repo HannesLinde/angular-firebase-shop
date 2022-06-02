@@ -27,7 +27,7 @@ export const loadShoppingCartFailure = createAction(
 
 export const updateShoppingCartSuccess = createAction(
   '[Orders API] Update Shopping Cart Success',
-  props<{ order: Order }>()
+  props<{ order: Order | undefined }>()
 );
 
 export const updateShoppingCartFailure = createAction(

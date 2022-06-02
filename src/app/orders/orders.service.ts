@@ -24,7 +24,7 @@ export class OrdersService extends FireBaseFacade<Order, OrderDto> {
   async getAllUsersOrders() {
     const ref = collection(this.firestore, COLLECTION);
     const querySnapshot = await getDocs(query(ref, where('status', '!=', 'NOT SUBMITTED')));
-    return querySnapshot.docs.map((doc) => doc.data() as unknown as Order);
+    return querySnapshot.docs.map((doc) => this.ordersAdapter.toModel(doc.data() as OrderDto));
   }
 
   async getUserOrders(ownerId: string): Promise<Order[]> {
@@ -36,7 +36,7 @@ export class OrdersService extends FireBaseFacade<Order, OrderDto> {
       ? querySnapshot.docs
           .filter((doc) => doc.data()['status'] !== 'NOT SUBMITTED')
           .map((doc) => {
-            const order = doc.data() as unknown as Order;
+            const order = this.ordersAdapter.toModel(doc.data() as OrderDto);
             order.id = doc.id;
             return order;
           })
@@ -50,7 +50,7 @@ export class OrdersService extends FireBaseFacade<Order, OrderDto> {
       query(ref, where('ownerId', '==', ownerId), where('status', '==', 'NOT SUBMITTED'))
     );
     return querySnapshot.docs.length > 0
-      ? ({ id: querySnapshot.docs[0].id, ...querySnapshot.docs[0].data() } as Order)
+      ? this.ordersAdapter.toModel({ id: querySnapshot.docs[0].id, ...querySnapshot.docs[0].data() } as OrderDto)
       : undefined;
   }
 }

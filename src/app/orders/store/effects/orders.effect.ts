@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '@app/core/services/user';
 import { UserState } from '@app/login/store/reducers/login.reducer';
 import { getAuthentification } from '@app/login/store/selectors/login.selector';
-import { Order } from '@app/orders/models/order.model';
+import { Order, OrderDetail } from '@app/orders/models/order.model';
 import { OrdersService } from '@app/orders/orders.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -43,8 +43,8 @@ export class OrderEffect {
       mergeMap(([{ detail }, order, user]) => {
         if (user)
           if (order) {
-            const newOrder = { ...order };
-            newOrder.details = [...newOrder.details, detail];
+            // it should be a better solution to remain to immutable/read Only details issue
+            const newOrder = this.addUpdateShoppingOrder(order, detail);
             return from(this.orderService.update(newOrder.id, newOrder)).pipe(
               map(() => OrderApiActions.addProductToCartSuccess({ order: newOrder })),
               catchError((error) => of(OrderApiActions.addProductToCartFailure({ error })))
@@ -73,7 +73,10 @@ export class OrderEffect {
       ofType(OrderPageActions.updateShoppingCart),
       mergeMap(({ order }) => {
         return from(this.orderService.update(order.id, order)).pipe(
-          map(() => OrderApiActions.updateShoppingCartSuccess({ order })),
+          // if the order is submitted, it should be removed from cart
+          map(() =>
+            OrderApiActions.updateShoppingCartSuccess({ order: order.status === 'SUBMITTED' ? undefined : order })
+          ),
           catchError((error) => of(OrderApiActions.updateShoppingCartFailure({ error })))
         );
       })
@@ -94,5 +97,20 @@ export class OrderEffect {
 
   private getOrders = (user: User) => {
     return user.admin ? from(this.orderService.getAllUsersOrders()) : from(this.orderService.getUserOrders(user.uid));
+  };
+
+  private addUpdateShoppingOrder = (order: Order, detail: OrderDetail) => {
+    const newOrder: Order = { ...order };
+    if (newOrder.details.find((currendDetail) => detail.productId === currendDetail.productId)) {
+      newOrder.details = newOrder.details.map((currendDetail) =>
+        detail.productId === currendDetail.productId
+          ? { ...detail, quantity: detail.quantity + currendDetail.quantity }
+          : currendDetail
+      );
+    } else {
+      newOrder.details = [...newOrder.details, detail];
+    }
+
+    return newOrder;
   };
 }

@@ -1,7 +1,12 @@
-<div *ngIf="shoppingOrder$ | async as shoppingOrder">
+<div *ngIf="shoppingOrder$ | async as shoppingOrder; else linkToProduct">
   <mat-card>
     <mat-card-content>
       <app-order-detail [order]="shoppingOrder" [allowUpdate]="true" (saveOrder)="onSave($event)"></app-order-detail>
     </mat-card-content>
   </mat-card>
 </div>
+<ng-template #linkToProduct>
+  <div class="link-to-products">
+    <button mat-raised-button [routerLink]="['/products']" color="primary">Go To Product List</button>
+  </div>
+</ng-template>

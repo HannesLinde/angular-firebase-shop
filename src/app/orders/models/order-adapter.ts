@@ -6,6 +6,8 @@ import { Order } from './order.model';
 @Injectable()
 export class OrderAdapter implements Adapter<Order, OrderDto> {
   toModel(data: OrderDto): Order {
+    //convert from firebase timestamp to js date
+    data.date = data.date.toDate();
     return Object.assign({}, data) as Order;
   }
   toDto(data: Order): OrderDto {

@@ -16,4 +16,5 @@ hr.divider {
   .order-total{
     display: flex;
     flex-direction: row-reverse;
+    -webkit-text-stroke: medium;
   }
