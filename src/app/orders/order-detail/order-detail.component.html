@@ -26,7 +26,14 @@
           <td style="width: 30%">{{ detail.orderPrice | currency: 'EUR':'symbol' }}</td>
           <td style="width: 20%">
             <mat-form-field style="width: 40px">
-              <input matInput type="number" [(ngModel)]="detail.quantity" [readonly]="!allowUpdate" min="1" />
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="detail.quantity"
+                [readonly]="!allowUpdate"
+                min="1"
+                (change)="change(detail)"
+              />
             </mat-form-field>
           </td>
         </tr>

@@ -39,6 +39,10 @@ export class OrderDetailComponent implements OnInit {
     this.details = [];
   }
 
+  change(detail: OrderDetail) {
+    if (detail.quantity < 1) detail.quantity = 1;
+  }
+
   // to avoid readOnly issue as order/detail in store
   private createDetailsCopy() {
     this.details = this.order ? this.order.details.map((detail) => ({ ...detail })) : [];
