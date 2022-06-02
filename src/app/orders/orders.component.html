@@ -2,10 +2,10 @@
   <mat-card-content>
     <table>
       <tr>
-        <td [ngClass]="isHandSet ? 'max-list-width' : 'fixed-list-width'">
+        <td class="element-cell-position" [ngClass]="isHandSet ? 'max-list-width' : 'fixed-list-width'">
           <app-order-list [orders$]="orders$" (selectOrder)="onOrderSelected($event)"></app-order-list>
         </td>
-        <td>
+        <td class="element-cell-position">
           <app-order-detail [ngClass]="isHandSet ? 'hide-order-detail' : ''" [order]="selectedOrder"></app-order-detail>
         </td>
       </tr>

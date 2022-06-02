@@ -16,13 +16,6 @@ mat-card {
     width: 100%;
   }
 
-/*
-// could be needed if style in dialog need to be different
-  @media screen and (max-width: 720px) {
-    
-    .order-detail{
-      display: none;
-      visibility: hidden;
-    }
-  }
-  */
+.element-cell-position{
+  vertical-align: top;
+}
