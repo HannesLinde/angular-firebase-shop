@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from '@app/core/services/snackBar.service';
 import { User } from '@app/core/services/user';
 import { UserState } from '@app/login/store/reducers/login.reducer';
 import { getAuthentification } from '@app/login/store/selectors/login.selector';
@@ -17,7 +19,8 @@ export class OrderEffect {
     private actions$: Actions,
     private orderService: OrdersService,
     private orderStore: Store<OrderState>,
-    private userStore: Store<UserState>
+    private userStore: Store<UserState>,
+    private snackBar: SnackBarService
   ) {}
 
   allOrders$ = createEffect(() => {
@@ -77,9 +80,12 @@ export class OrderEffect {
       mergeMap(({ order }) => {
         return from(this.orderService.update(order.id, order)).pipe(
           // if the order is submitted, it should be removed from cart
-          map(() =>
-            OrderApiActions.updateShoppingCartSuccess({ order: order.status === 'SUBMITTED' ? undefined : order })
-          ),
+          map(() => {
+            this.snackBar.openSuccessSnackBar('Saved Successfully', undefined);
+            return OrderApiActions.updateShoppingCartSuccess({
+              order: order.status === 'SUBMITTED' ? undefined : order,
+            });
+          }),
           catchError((error) => of(OrderApiActions.updateShoppingCartFailure({ error })))
         );
       })

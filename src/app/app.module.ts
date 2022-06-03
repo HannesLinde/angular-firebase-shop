@@ -30,6 +30,7 @@ import { ProductsModule } from './products/products.module';
 import { AppEffect } from './store/effects/app.effect';
 import { appReducer } from './store/reducers/app.reducer';
 import { OrdersModule } from './orders/orders.module';
+import { SnackBarService } from './core/services/snackBar.service';
 
 //Pipes
 
@@ -56,7 +57,7 @@ import { OrdersModule } from './orders/orders.module';
       logOnly: environment.production,
     }),
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, SnackBarService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

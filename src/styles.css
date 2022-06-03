@@ -20,3 +20,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow: h
     box-shadow: none;
     background: rgba(0, 0, 0, 0.0);
 }
+
+.success-snackbar{
+    color: white;
+    background: #7986cb;
+}
+
+.error-snackbar{
+    color: white;
+    background: #ff4081;
+}
