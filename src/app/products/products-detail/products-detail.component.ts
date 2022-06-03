@@ -41,11 +41,5 @@ export class ProductsDetailComponent implements OnInit {
       width: '450px',
       data: product,
     });
-    /*const config = this.router.config;
-    config.push({
-      path: 'orders',
-      loadChildren: () => import('../../orders/orders.module').then((m) => m.OrdersModule),
-    });
-    this.router.resetConfig(config);*/
   }
 }

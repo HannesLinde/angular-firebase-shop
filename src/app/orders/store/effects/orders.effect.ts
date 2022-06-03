@@ -6,9 +6,11 @@ import { UserState } from '@app/login/store/reducers/login.reducer';
 import { getAuthentification } from '@app/login/store/selectors/login.selector';
 import { Order, OrderDetail } from '@app/orders/models/order.model';
 import { OrdersService } from '@app/orders/orders.service';
+import { ProductState } from '@app/products/store/reducers/products.reducer';
+import { getProducts } from '@app/products/store/selectors/products.selector';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, mergeMap, map, of, withLatestFrom, from } from 'rxjs';
+import { catchError, mergeMap, map, of, withLatestFrom, from, combineLatest, debounceTime } from 'rxjs';
 import { OrderApiActions, OrderPageActions } from '../actions';
 import { OrderState } from '../reducers/orders.reducer';
 import { getShoppingCartOrder } from '../selectors/orders.selector';
@@ -20,6 +22,7 @@ export class OrderEffect {
     private orderService: OrdersService,
     private orderStore: Store<OrderState>,
     private userStore: Store<UserState>,
+    private productStore: Store<ProductState>,
     private snackBar: SnackBarService
   ) {}
 
@@ -96,8 +99,19 @@ export class OrderEffect {
     return this.actions$.pipe(
       ofType(OrderPageActions.loadShoppingCart),
       mergeMap(({ ownerId }) =>
-        from(this.orderService.getUserShoppingCart(ownerId)).pipe(
-          map((order) => OrderApiActions.loadShoppingCartSuccess({ order })),
+        combineLatest([
+          from(this.orderService.getUserShoppingCart(ownerId)),
+          this.productStore.select(getProducts),
+        ]).pipe(
+          debounceTime(500),
+          map(([order, products]) => {
+            if (order)
+              order.details = order.details.map((detail) => ({
+                ...detail,
+                product: products.find((product) => product.id === detail.productId),
+              }));
+            return OrderApiActions.loadShoppingCartSuccess({ order });
+          }),
           catchError((error) => of(OrderApiActions.loadShoppingCartFailure({ error })))
         )
       )

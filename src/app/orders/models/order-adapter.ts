@@ -12,6 +12,11 @@ export class OrderAdapter implements Adapter<Order, OrderDto> {
   }
   toDto(data: Order): OrderDto {
     const { id, ...order } = { ...data };
+    order.details = order.details.map((detail) => ({
+      orderPrice: detail.orderPrice,
+      productId: detail.productId,
+      quantity: detail.quantity,
+    }));
     return order as OrderDto;
   }
 }

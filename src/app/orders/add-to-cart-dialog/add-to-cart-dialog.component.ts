@@ -38,6 +38,7 @@ export class AddToCartDialogComponent implements OnInit {
             productId: this.product.id,
             orderPrice: this.product.price,
             quantity: this.detailForm.value.quantity,
+            product: this.product,
           },
         })
       );
